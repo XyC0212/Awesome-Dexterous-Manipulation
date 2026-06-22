@@ -1,0 +1,177 @@
+#!/usr/bin/env python3
+"""Generate docs/index.html (an interactive, filterable view) from the README table.
+
+The README table is the single source of truth. Run this after editing it:
+
+    python3 scripts/gen_site.py
+
+Then commit docs/index.html. Serve it with GitHub Pages (Settings -> Pages ->
+deploy from branch -> /docs).
+"""
+import json
+import re
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+README = ROOT / "README.md"
+OUT = ROOT / "docs" / "index.html"
+
+TAGS = ["RL", "IL", "WM", "Tac", "HW", "Tele"]
+LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
+
+
+def parse_links(cell):
+    return [{"label": m.group(1), "url": m.group(2)} for m in LINK_RE.finditer(cell)]
+
+
+def parse_readme():
+    papers = []
+    for line in README.read_text(encoding="utf-8").splitlines():
+        if not re.match(r"^\|\s*\d+\s*\|", line):
+            continue
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        # cells: #, Title, Venue, Year, RL, IL, WM, Tac, HW, Tele, Links
+        if len(cells) < 11:
+            continue
+        num, title, venue, year = cells[0], cells[1], cells[2], cells[3]
+        tag_cells = cells[4:10]
+        tags = [TAGS[i] for i, c in enumerate(tag_cells) if "✅" in c]
+        papers.append({
+            "n": int(num),
+            "title": title,
+            "venue": venue,
+            "year": year,
+            "tags": tags,
+            "links": parse_links(cells[10]),
+        })
+    return papers
+
+
+HTML = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Awesome Dexterous Manipulation</title>
+<style>
+  :root {{ color-scheme: light dark; }}
+  body {{ font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+         margin: 0; padding: 1.5rem; max-width: 1100px; margin: 0 auto; line-height: 1.45; }}
+  h1 {{ margin: 0 0 .25rem; font-size: 1.6rem; }}
+  .sub {{ color: #777; margin: 0 0 1.25rem; }}
+  .controls {{ position: sticky; top: 0; background: Canvas; padding: .75rem 0;
+               border-bottom: 1px solid #8884; z-index: 5; }}
+  #search {{ width: 100%; padding: .6rem .8rem; font-size: 1rem; box-sizing: border-box;
+             border: 1px solid #8886; border-radius: 8px; background: Canvas; color: inherit; }}
+  .tagbar {{ display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .6rem; align-items: center; }}
+  .tag {{ cursor: pointer; user-select: none; border: 1px solid #8886; border-radius: 999px;
+          padding: .25rem .7rem; font-size: .85rem; }}
+  .tag.on {{ background: #3b82f6; border-color: #3b82f6; color: #fff; }}
+  .meta {{ margin-left: auto; color: #777; font-size: .85rem; }}
+  .mode {{ font-size: .8rem; color: #777; cursor: pointer; }}
+  table {{ border-collapse: collapse; width: 100%; margin-top: 1rem; }}
+  th, td {{ text-align: left; padding: .5rem .6rem; border-bottom: 1px solid #8883; vertical-align: top; }}
+  th {{ font-size: .8rem; text-transform: uppercase; letter-spacing: .03em; color: #777; }}
+  td.year, td.num {{ white-space: nowrap; color: #777; }}
+  .pill {{ display: inline-block; font-size: .72rem; padding: .05rem .45rem; margin: 0 .2rem .2rem 0;
+           border-radius: 999px; background: #8882; }}
+  .links a {{ margin-right: .5rem; white-space: nowrap; }}
+  tr.hide {{ display: none; }}
+  mark {{ background: #fde047; color: #000; }}
+</style>
+</head>
+<body>
+  <h1>Awesome Dexterous Manipulation</h1>
+  <p class="sub">A curated, filterable collection of dexterous robotic manipulation papers.</p>
+  <div class="controls">
+    <input id="search" type="search" placeholder="Search title or venue…" autocomplete="off">
+    <div class="tagbar" id="tagbar">
+      <span class="mode" id="mode" title="Toggle AND/OR matching">match: <b>all</b></span>
+      <span class="meta" id="count"></span>
+    </div>
+  </div>
+  <table>
+    <thead><tr><th>#</th><th>Title</th><th>Venue</th><th>Year</th><th>Tags</th><th>Links</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+<script>
+const PAPERS = {data};
+const TAGS = {tags};
+let active = new Set();
+let andMode = true;
+
+const tagbar = document.getElementById('tagbar');
+const mode = document.getElementById('mode');
+TAGS.forEach(t => {{
+  const el = document.createElement('span');
+  el.className = 'tag'; el.textContent = t; el.dataset.tag = t;
+  el.onclick = () => {{ active.has(t) ? active.delete(t) : active.add(t); el.classList.toggle('on'); render(); }};
+  tagbar.insertBefore(el, mode);
+}});
+mode.onclick = () => {{ andMode = !andMode; mode.querySelector('b').textContent = andMode ? 'all' : 'any'; render(); }};
+
+const rows = document.getElementById('rows');
+const search = document.getElementById('search');
+const count = document.getElementById('count');
+
+function esc(s) {{ return s.replace(/[&<>]/g, c => ({{'&':'&amp;','<':'&lt;','>':'&gt;'}}[c])); }}
+function hl(text, q) {{
+  if (!q) return esc(text);
+  const i = text.toLowerCase().indexOf(q);
+  if (i < 0) return esc(text);
+  return esc(text.slice(0,i)) + '<mark>' + esc(text.slice(i,i+q.length)) + '</mark>' + esc(text.slice(i+q.length));
+}}
+
+function build() {{
+  rows.innerHTML = PAPERS.map(p => {{
+    const pills = p.tags.map(t => '<span class="pill">'+t+'</span>').join('');
+    const links = p.links.map(l => '<a href="'+l.url+'" target="_blank" rel="noopener">'+esc(l.label)+'</a>').join(' · ');
+    return '<tr data-title="'+esc(p.title.toLowerCase())+'" data-venue="'+esc(p.venue.toLowerCase())+'" data-tags="'+p.tags.join(',')+'">'
+      + '<td class="num">'+p.n+'</td>'
+      + '<td class="title">'+esc(p.title)+'</td>'
+      + '<td>'+esc(p.venue)+'</td>'
+      + '<td class="year">'+esc(p.year)+'</td>'
+      + '<td>'+pills+'</td>'
+      + '<td class="links">'+links+'</td></tr>';
+  }}).join('');
+}}
+
+function render() {{
+  const q = search.value.trim().toLowerCase();
+  let shown = 0;
+  for (const tr of rows.children) {{
+    const tags = tr.dataset.tags ? tr.dataset.tags.split(',') : [];
+    const tagOk = active.size === 0 || (andMode
+      ? [...active].every(t => tags.includes(t))
+      : [...active].some(t => tags.includes(t)));
+    const textOk = !q || tr.dataset.title.includes(q) || tr.dataset.venue.includes(q);
+    const ok = tagOk && textOk;
+    tr.classList.toggle('hide', !ok);
+    if (ok) {{ shown++;
+      tr.querySelector('.title').innerHTML = hl(tr.querySelector('.title').textContent, q);
+    }}
+  }}
+  count.textContent = shown + ' / ' + PAPERS.length + ' papers';
+}}
+
+build();
+search.addEventListener('input', render);
+render();
+</script>
+</body>
+</html>
+"""
+
+
+def main():
+    papers = parse_readme()
+    html = HTML.format(
+        data=json.dumps(papers, ensure_ascii=False),
+        tags=json.dumps(TAGS),
+    )
+    OUT.write_text(html, encoding="utf-8")
+    print(f"Wrote {OUT} with {len(papers)} papers.")
+
+
+if __name__ == "__main__":
+    main()

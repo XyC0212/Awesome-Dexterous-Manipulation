@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Awesome Dexterous Manipulation</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+         margin: 0; padding: 1.5rem; max-width: 1100px; margin: 0 auto; line-height: 1.45; }
+  h1 { margin: 0 0 .25rem; font-size: 1.6rem; }
+  .sub { color: #777; margin: 0 0 1.25rem; }
+  .controls { position: sticky; top: 0; background: Canvas; padding: .75rem 0;
+               border-bottom: 1px solid #8884; z-index: 5; }
+  #search { width: 100%; padding: .6rem .8rem; font-size: 1rem; box-sizing: border-box;
+             border: 1px solid #8886; border-radius: 8px; background: Canvas; color: inherit; }
+  .tagbar { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .6rem; align-items: center; }
+  .tag { cursor: pointer; user-select: none; border: 1px solid #8886; border-radius: 999px;
+          padding: .25rem .7rem; font-size: .85rem; }
+  .tag.on { background: #3b82f6; border-color: #3b82f6; color: #fff; }
+  .meta { margin-left: auto; color: #777; font-size: .85rem; }
+  .mode { font-size: .8rem; color: #777; cursor: pointer; }
+  table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+  th, td { text-align: left; padding: .5rem .6rem; border-bottom: 1px solid #8883; vertical-align: top; }
+  th { font-size: .8rem; text-transform: uppercase; letter-spacing: .03em; color: #777; }
+  td.year, td.num { white-space: nowrap; color: #777; }
+  .pill { display: inline-block; font-size: .72rem; padding: .05rem .45rem; margin: 0 .2rem .2rem 0;
+           border-radius: 999px; background: #8882; }
+  .links a { margin-right: .5rem; white-space: nowrap; }
+  tr.hide { display: none; }
+  mark { background: #fde047; color: #000; }
+</style>
+</head>
+<body>
+  <h1>Awesome Dexterous Manipulation</h1>
+  <p class="sub">A curated, filterable collection of dexterous robotic manipulation papers.</p>
+  <div class="controls">
+    <input id="search" type="search" placeholder="Search title or venue…" autocomplete="off">
+    <div class="tagbar" id="tagbar">
+      <span class="mode" id="mode" title="Toggle AND/OR matching">match: <b>all</b></span>
+      <span class="meta" id="count"></span>
+    </div>
+  </div>
+  <table>
+    <thead><tr><th>#</th><th>Title</th><th>Venue</th><th>Year</th><th>Tags</th><th>Links</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+<script>
+const PAPERS = [{"n": 1, "title": "T-Rex: Tactile-Reactive Dexterous Manipulation", "venue": "arXiv", "year": "2026", "tags": ["IL", "Tac", "HW"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2606.17055"}]}, {"n": 2, "title": "Touch in the Wild: Learning Fine-Grained Manipulation with a Portable Visuo-Tactile Gripper", "venue": "NeurIPS", "year": "2025", "tags": ["IL", "Tac", "HW"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2507.15062"}, {"label": "Project", "url": "https://binghao-huang.github.io/touch_in_the_wild/"}]}, {"n": 3, "title": "DexUMI: Using Human Hand as the Universal Manipulation Interface for Dexterous Manipulation", "venue": "CoRL", "year": "2025", "tags": ["IL", "Tac", "HW", "Tele"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2505.21864"}, {"label": "Project", "url": "https://dex-umi.github.io/"}]}, {"n": 4, "title": "DEXOP: A Device for Robotic Transfer of Dexterous Human Manipulation", "venue": "arXiv", "year": "2025", "tags": ["IL", "Tac", "HW", "Tele"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2509.04441"}]}, {"n": 5, "title": "TypeTele: Releasing Dexterity in Teleoperation by Dexterous Manipulation Types", "venue": "CoRL", "year": "2025", "tags": ["IL", "Tele"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2507.01857"}, {"label": "Project", "url": "https://isee-laboratory.github.io/TypeTele/"}]}, {"n": 6, "title": "ViTacFormer: Learning Cross-Modal Representation for Visuo-Tactile Dexterous Manipulation", "venue": "arXiv", "year": "2025", "tags": ["IL", "WM", "Tac"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2506.15953"}, {"label": "Project", "url": "https://roboverseorg.github.io/ViTacFormerPage/"}, {"label": "Code", "url": "https://github.com/RoboVerseOrg/ViTacFormer"}]}, {"n": 7, "title": "Touch begins where vision ends: Generalizable policies for contact-rich manipulation", "venue": "arXiv", "year": "2025", "tags": ["IL", "Tac"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2506.13762"}]}, {"n": 8, "title": "Analyzing Key Objectives in Human-to-Robot Retargeting for Dexterous Manipulation", "venue": "arXiv", "year": "2025", "tags": ["Tele"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2506.09384"}, {"label": "Project", "url": "https://mingrui-yu.github.io/retargeting/"}]}, {"n": 9, "title": "Self-Supervised Perception for Tactile Skin Covered Dexterous Hands (Sparsh-skin)", "venue": "CoRL", "year": "2025", "tags": ["Tac"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2505.11420"}, {"label": "Project", "url": "https://akashsharma02.github.io/sparsh-skin-ssl/"}]}, {"n": 10, "title": "Reactive Diffusion Policy: Slow-Fast Visual-Tactile Policy Learning for Contact-Rich Manipulation", "venue": "RSS", "year": "2025", "tags": ["IL", "Tac", "Tele"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2503.02881"}, {"label": "Project", "url": "https://reactive-diffusion-policy.github.io/"}, {"label": "Code", "url": "https://github.com/xiaoxiaoxh/reactive_diffusion_policy"}]}, {"n": 11, "title": "Exo-ViHa: A Cross-Platform Exoskeleton System with Visual and Haptic Feedback", "venue": "arXiv", "year": "2025", "tags": ["IL", "Tac", "HW", "Tele"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2503.01543"}, {"label": "Project", "url": "https://exo-viha2025.github.io/"}]}, {"n": 12, "title": "HOMIE: Humanoid Loco-Manipulation with Isomorphic Exoskeleton Cockpit", "venue": "arXiv", "year": "2025", "tags": ["RL", "HW", "Tele"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2502.13013"}, {"label": "Code", "url": "https://github.com/InternRobotics/OpenHomie"}]}, {"n": 13, "title": "DOGlove: Dexterous Manipulation with a Low-Cost Open-Source Haptic Force Feedback Glove", "venue": "RSS", "year": "2025", "tags": ["IL", "Tac", "HW", "Tele"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2502.07730"}, {"label": "Project", "url": "https://do-glove.github.io/"}, {"label": "Code", "url": "https://github.com/TEA-Lab/DOGlove"}]}, {"n": 14, "title": "DexterityGen: Foundation Controller for Unprecedented Dexterity", "venue": "arXiv", "year": "2025", "tags": ["RL", "Tele"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2502.04307"}, {"label": "Project", "url": "https://zhaohengyin.github.io/dexteritygen/"}]}, {"n": 15, "title": "Sim-to-Real Reinforcement Learning for Vision-Based Dexterous Manipulation on Humanoids", "venue": "arXiv", "year": "2025", "tags": ["RL"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2502.20396"}, {"label": "Project", "url": "https://toruowo.github.io/recipe/"}]}, {"n": 16, "title": "From Simple to Complex Skills: The Case of In-Hand Object Reorientation", "venue": "arXiv", "year": "2025", "tags": ["RL"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2501.05439"}]}, {"n": 17, "title": "DexMimicGen: Automated Data Generation for Bimanual Dexterous Manipulation", "venue": "ICRA", "year": "2025", "tags": ["IL", "Tele"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2410.24185"}, {"label": "Project", "url": "https://dexmimicgen.github.io/"}]}, {"n": 18, "title": "ViViDex: Learning Vision-based Dexterous Manipulation from Human Videos", "venue": "ICRA", "year": "2025", "tags": ["RL", "IL"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2404.15709"}, {"label": "Project", "url": "https://zerchen.github.io/projects/vividex.html"}, {"label": "Code", "url": "https://github.com/zerchen/vividex_mujoco"}]}, {"n": 19, "title": "Generalizable Humanoid Manipulation with Improved 3D Diffusion Policies (iDP3)", "venue": "IROS", "year": "2025", "tags": ["IL", "HW", "Tele"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2410.10803"}, {"label": "Project", "url": "https://humanoid-manipulation.github.io/"}, {"label": "Code", "url": "https://github.com/YanjieZe/Improved-3D-Diffusion-Policy"}]}, {"n": 20, "title": "3D-ViTac: Learning Fine-Grained Manipulation with Visuo-Tactile Sensing", "venue": "CoRL", "year": "2024", "tags": ["IL", "Tac", "HW"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2410.24091"}, {"label": "Project", "url": "https://binghao-huang.github.io/3D-ViTac/"}, {"label": "Code", "url": "https://github.com/binghao-huang/3D-ViTac"}]}, {"n": 21, "title": "Object-Centric Dexterous Manipulation from Human Motion Data", "venue": "CoRL", "year": "2024", "tags": ["RL", "IL"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2411.04005"}, {"label": "Project", "url": "https://cypypccpy.github.io/obj-dex.github.io/"}]}, {"n": 22, "title": "Sparsh: Self-Supervised Touch Representations for Vision-Based Tactile Sensing", "venue": "CoRL", "year": "2024", "tags": ["Tac"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2410.24090"}, {"label": "Project", "url": "https://sparsh-ssl.github.io/"}, {"label": "Code", "url": "https://github.com/facebookresearch/sparsh"}]}, {"n": 23, "title": "Learning Precise, Contact-Rich Manipulation through Uncalibrated Tactile Skins (VISK)", "venue": "arXiv", "year": "2024", "tags": ["IL", "Tac", "HW"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2410.17246"}]}, {"n": 24, "title": "AnySkin: Plug-and-play Skin Sensing for Robotic Touch", "venue": "arXiv", "year": "2024", "tags": ["IL", "Tac", "HW"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2409.08276"}, {"label": "Project", "url": "https://any-skin.github.io/"}]}, {"n": 25, "title": "ACE: A Cross-Platform Visual-Exoskeletons System for Low-Cost Dexterous Teleoperation", "venue": "arXiv", "year": "2024", "tags": ["IL", "HW", "Tele"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2408.11805"}, {"label": "Project", "url": "https://ace-teleop.github.io/"}]}, {"n": 26, "title": "Lessons from Learning to Spin \"Pens\"", "venue": "CoRL", "year": "2024", "tags": ["RL"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2407.18902"}, {"label": "Project", "url": "https://penspin.github.io/"}]}, {"n": 27, "title": "Learning In-Hand Translation Using Tactile Skin With Shear and Normal Force Sensing", "venue": "arXiv", "year": "2024", "tags": ["RL", "Tac"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2407.07885"}, {"label": "Project", "url": "https://jessicayin.github.io/tactile-skin-rl/"}, {"label": "Code", "url": "https://github.com/jessicayin/tactile_skin_model"}]}, {"n": 28, "title": "Bunny-VisionPro: Real-Time Bimanual Dexterous Teleoperation for Imitation Learning", "venue": "arXiv", "year": "2024", "tags": ["IL", "Tac", "HW", "Tele"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2407.03162"}, {"label": "Code", "url": "https://github.com/Dingry/BunnyVisionPro"}]}, {"n": 29, "title": "DextrAH-G: Pixels-to-Action Dexterous Arm-Hand Grasping with Geometric Fabrics", "venue": "CoRL", "year": "2024", "tags": ["RL"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2407.02274"}]}, {"n": 30, "title": "Open-TeleVision: Teleoperation with Immersive Active Visual Feedback", "venue": "CoRL", "year": "2024", "tags": ["IL", "HW", "Tele"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2407.01512"}, {"label": "Project", "url": "https://robot-tv.github.io/"}, {"label": "Code", "url": "https://github.com/OpenTeleVision/TeleVision"}]}, {"n": 31, "title": "AnyRotate: Gravity-Invariant In-Hand Object Rotation with Sim-to-Real Touch", "venue": "CoRL", "year": "2024", "tags": ["RL", "Tac", "HW"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2405.07391"}, {"label": "Project", "url": "https://maxyang27896.github.io/anyrotate/"}]}, {"n": 32, "title": "Twisting Lids Off with Two Hands", "venue": "CoRL", "year": "2024", "tags": ["RL"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2403.02338"}]}, {"n": 33, "title": "DexCap: Scalable and Portable Mocap Data Collection System for Dexterous Manipulation", "venue": "RSS", "year": "2024", "tags": ["IL", "HW", "Tele"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2403.07788"}]}, {"n": 34, "title": "3D Diffusion Policy (DP3): Generalizable Visuomotor Policy Learning via Simple 3D Representations", "venue": "RSS", "year": "2024", "tags": ["IL"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2403.03954"}, {"label": "Project", "url": "https://3d-diffusion-policy.github.io/"}, {"label": "Code", "url": "https://github.com/YanjieZe/3D-Diffusion-Policy"}]}, {"n": 35, "title": "Robot Synesthesia: In-Hand Manipulation with Visuotactile Sensing", "venue": "ICRA", "year": "2024", "tags": ["RL", "Tac"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2312.01853"}, {"label": "Project", "url": "https://yingyuan0414.github.io/visuotactile/"}, {"label": "Code", "url": "https://github.com/YingYuan0414/in-hand-rotation"}]}, {"n": 36, "title": "See to Touch: Learning Tactile Dexterity through Visual Incentives (TAVI)", "venue": "ICRA", "year": "2024", "tags": ["RL", "Tac"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2309.12300"}, {"label": "Project", "url": "https://see-to-touch.github.io/"}, {"label": "Code", "url": "https://github.com/irmakguzey/see-to-touch"}]}, {"n": 37, "title": "Dexterous Functional Grasping", "venue": "CoRL", "year": "2023", "tags": ["RL"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2312.02975"}, {"label": "Project", "url": "https://dexfunc.github.io/"}]}, {"n": 38, "title": "General In-Hand Object Rotation with Vision and Touch (RotateIt)", "venue": "CoRL", "year": "2023", "tags": ["RL", "Tac"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2309.09979"}, {"label": "Project", "url": "https://haozhi.io/rotateit/"}]}, {"n": 39, "title": "Rotating without Seeing: Towards In-hand Dexterity through Touch", "venue": "RSS", "year": "2023", "tags": ["RL", "Tac"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2303.10880"}, {"label": "Project", "url": "https://touchdexterity.github.io/"}]}, {"n": 40, "title": "AnyTeleop: A General Vision-Based Dexterous Robot Arm-Hand Teleoperation System", "venue": "RSS", "year": "2023", "tags": ["IL", "Tele"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2307.04577"}, {"label": "Project", "url": "https://yzqin.github.io/anyteleop/"}]}, {"n": 41, "title": "Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware (ACT / ALOHA)", "venue": "RSS", "year": "2023", "tags": ["IL", "HW", "Tele"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2304.13705"}, {"label": "Project", "url": "https://tonyzhaozh.github.io/aloha/"}]}, {"n": 42, "title": "Diffusion Policy: Visuomotor Policy Learning via Action Diffusion", "venue": "RSS", "year": "2023", "tags": ["IL"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2303.04137"}, {"label": "Project", "url": "https://diffusion-policy.cs.columbia.edu/"}]}, {"n": 43, "title": "Visual Dexterity: In-Hand Reorientation of Novel and Complex Object Shapes", "venue": "Science Robotics", "year": "2023", "tags": ["RL"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2211.11744"}, {"label": "Project", "url": "https://taochenshh.github.io/projects/visual-dexterity"}]}, {"n": 44, "title": "DeXtreme: Transfer of Agile In-Hand Manipulation from Simulation to Reality", "venue": "ICRA", "year": "2023", "tags": ["RL"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2210.13702"}, {"label": "Project", "url": "https://dextreme.org/"}]}, {"n": 45, "title": "In-Hand Object Rotation via Rapid Motor Adaptation (Hora)", "venue": "CoRL", "year": "2023", "tags": ["RL"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2210.04887"}, {"label": "Code", "url": "https://github.com/HaozhiQi/Hora"}]}, {"n": 46, "title": "DexPoint: Generalizable Point Cloud RL for Sim-to-Real Dexterous Manipulation", "venue": "CoRL", "year": "2022", "tags": ["RL"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2211.09423"}, {"label": "Code", "url": "https://github.com/yzqin/dexpoint-release"}]}, {"n": 47, "title": "VideoDex: Learning Dexterity from Internet Videos", "venue": "CoRL", "year": "2022", "tags": ["RL", "IL"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2212.04498"}, {"label": "Project", "url": "https://video-dex.github.io/"}]}, {"n": 48, "title": "DexMV: Imitation Learning for Dexterous Manipulation from Human Videos", "venue": "ECCV", "year": "2022", "tags": ["RL", "IL"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2108.05877"}, {"label": "Project", "url": "https://yzqin.github.io/dexmv/"}, {"label": "Code", "url": "https://github.com/yzqin/dexmv-sim"}]}, {"n": 49, "title": "DexVIP: Learning Dexterous Grasping with Human Hand Pose Priors from Video", "venue": "CoRL", "year": "2022", "tags": ["RL", "IL"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2202.00164"}]}, {"n": 50, "title": "From One Hand to Multiple Hands: Imitation Learning from Single-Camera Teleoperation", "venue": "RA-L", "year": "2022", "tags": ["IL", "Tele"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2204.12490"}, {"label": "Project", "url": "https://yzqin.github.io/dex-teleop-imitation/"}]}, {"n": 51, "title": "Robotic Telekinesis: Learning a Robotic Hand Imitator by Watching Humans on YouTube", "venue": "RSS", "year": "2022", "tags": ["IL", "Tele"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2202.10448"}, {"label": "Project", "url": "https://robotic-telekinesis.github.io/"}]}, {"n": 52, "title": "A System for General In-Hand Object Re-Orientation", "venue": "CoRL", "year": "2021", "tags": ["RL"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2111.03043"}, {"label": "Project", "url": "https://taochenshh.github.io/projects/in-hand-reorientation"}]}, {"n": 53, "title": "Learning Dexterous In-Hand Manipulation", "venue": "IJRR", "year": "2020", "tags": ["RL"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/1808.00177"}, {"label": "Project", "url": "https://openai.com/index/learning-dexterity/"}]}, {"n": 54, "title": "DIGIT: A Low-Cost Compact High-Resolution Tactile Sensor for In-Hand Manipulation", "venue": "RA-L", "year": "2020", "tags": ["Tac", "HW"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2005.14679"}]}, {"n": 55, "title": "DexPilot: Vision-Based Teleoperation of Dexterous Robotic Hand-Arm System", "venue": "ICRA", "year": "2020", "tags": ["Tele"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/1910.03135"}, {"label": "Project", "url": "https://research.nvidia.com/publication/2020-05_dexpilot-vision-based-teleoperation-dexterous-robotic-hand-arm-system"}]}, {"n": 56, "title": "Solving Rubik's Cube with a Robot Hand", "venue": "arXiv", "year": "2019", "tags": ["RL"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/1910.07113"}, {"label": "Project", "url": "https://openai.com/index/solving-rubiks-cube/"}]}, {"n": 57, "title": "Learning Complex Dexterous Manipulation with Deep RL and Demonstrations (DAPG)", "venue": "RSS", "year": "2018", "tags": ["RL", "IL"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/1709.10087"}]}];
+const TAGS = ["RL", "IL", "WM", "Tac", "HW", "Tele"];
+let active = new Set();
+let andMode = true;
+
+const tagbar = document.getElementById('tagbar');
+const mode = document.getElementById('mode');
+TAGS.forEach(t => {
+  const el = document.createElement('span');
+  el.className = 'tag'; el.textContent = t; el.dataset.tag = t;
+  el.onclick = () => { active.has(t) ? active.delete(t) : active.add(t); el.classList.toggle('on'); render(); };
+  tagbar.insertBefore(el, mode);
+});
+mode.onclick = () => { andMode = !andMode; mode.querySelector('b').textContent = andMode ? 'all' : 'any'; render(); };
+
+const rows = document.getElementById('rows');
+const search = document.getElementById('search');
+const count = document.getElementById('count');
+
+function esc(s) { return s.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+function hl(text, q) {
+  if (!q) return esc(text);
+  const i = text.toLowerCase().indexOf(q);
+  if (i < 0) return esc(text);
+  return esc(text.slice(0,i)) + '<mark>' + esc(text.slice(i,i+q.length)) + '</mark>' + esc(text.slice(i+q.length));
+}
+
+function build() {
+  rows.innerHTML = PAPERS.map(p => {
+    const pills = p.tags.map(t => '<span class="pill">'+t+'</span>').join('');
+    const links = p.links.map(l => '<a href="'+l.url+'" target="_blank" rel="noopener">'+esc(l.label)+'</a>').join(' · ');
+    return '<tr data-title="'+esc(p.title.toLowerCase())+'" data-venue="'+esc(p.venue.toLowerCase())+'" data-tags="'+p.tags.join(',')+'">'
+      + '<td class="num">'+p.n+'</td>'
+      + '<td class="title">'+esc(p.title)+'</td>'
+      + '<td>'+esc(p.venue)+'</td>'
+      + '<td class="year">'+esc(p.year)+'</td>'
+      + '<td>'+pills+'</td>'
+      + '<td class="links">'+links+'</td></tr>';
+  }).join('');
+}
+
+function render() {
+  const q = search.value.trim().toLowerCase();
+  let shown = 0;
+  for (const tr of rows.children) {
+    const tags = tr.dataset.tags ? tr.dataset.tags.split(',') : [];
+    const tagOk = active.size === 0 || (andMode
+      ? [...active].every(t => tags.includes(t))
+      : [...active].some(t => tags.includes(t)));
+    const textOk = !q || tr.dataset.title.includes(q) || tr.dataset.venue.includes(q);
+    const ok = tagOk && textOk;
+    tr.classList.toggle('hide', !ok);
+    if (ok) { shown++;
+      tr.querySelector('.title').innerHTML = hl(tr.querySelector('.title').textContent, q);
+    }
+  }
+  count.textContent = shown + ' / ' + PAPERS.length + ' papers';
+}
+
+build();
+search.addEventListener('input', render);
+render();
+</script>
+</body>
+</html>

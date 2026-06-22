@@ -2,6 +2,8 @@
 
 A curated collection of the latest papers and resources on dexterous robotic manipulation, driven by a passion for research and the ambition to push the boundaries of robotics toward more capable, adaptive, and intelligent manipulation systems.
 
+> 🔎 **[Interactive filterable version »](https://xyc0212.github.io/Awesome-Dexterous-Manipulation/)** — live search and tag filters (RL / IL / WM / Tac / HW / Tele). Requires GitHub Pages to be enabled (Settings → Pages → deploy from branch → `/docs`).
+
 ## Categories
 
 Each paper is tagged across the following themes:
@@ -89,3 +91,11 @@ Contributions are welcome! To add a paper, append a new row to the table above w
 - Links in the format `[Paper](url) · [Project](url) · [Code](url)` (include only the ones that exist).
 
 Please keep the table sorted with the newest papers first.
+
+The README table is the single source of truth. After editing it, regenerate the interactive page with:
+
+```bash
+python3 scripts/gen_site.py
+```
+
+and commit the updated `docs/index.html`.
