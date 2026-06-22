@@ -4,7 +4,7 @@
 
 ## My take
 
-_Your opinion here — strengths, weaknesses, relevance to your work, ideas to borrow._
+My opinion is one strong infrastructure and suitable representation to elimate the sim-to-real gap.
 
 ## Notes
 
