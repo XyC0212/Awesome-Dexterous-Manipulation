@@ -56,6 +56,12 @@ label that doesn't truly apply.
    Keep it to a single sentence. This file is the retrieval index; do not duplicate
    labels/venue/year/affiliation here — those live in the README table.
 
+   Then create an empty **notes stub** at `notes/<slug>.md` for the user to fill in their
+   own opinion, following the template of the existing files in
+   [notes/](../../../notes/) (title heading, a `> ` link line, a `## My take` section with
+   a placeholder, and a `## Notes` section). Never overwrite a notes file that already
+   exists.
+
 5. **Renumber and regenerate**, from the repo root:
 
    ```bash
@@ -73,6 +79,8 @@ label that doesn't truly apply.
 ## Retrieval
 
 When the user later asks you to find / recall a paper ("which paper used a tactile glove?",
-"the world-model one from 2025"), read [SUMMARIES.md](../../../SUMMARIES.md) (and the
-[README table](../../../README.md) for labels/year/affiliation) and answer from the
+"the world-model one from 2025", "the paper I liked for its dataset"), read
+[SUMMARIES.md](../../../SUMMARIES.md) for the summaries, the
+[README table](../../../README.md) for labels/year/affiliation, and the
+[notes/](../../../notes/) files for the user's own opinions (`## My take`). Answer from the
 matching entry, citing the paper link.
