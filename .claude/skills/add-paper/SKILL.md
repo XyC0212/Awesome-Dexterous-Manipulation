@@ -46,12 +46,15 @@ label that doesn't truly apply.
    `[Paper](url) · [Project](url) · [Code](url)` (only the ones that exist). The `#` value
    doesn't matter at insert time — step 5 renumbers.
 
-4. **Write the summary** to `summaries/<slug>.md` where `<slug>` is the kebab-case title.
-   Follow the exact frontmatter format documented in
-   [summaries/README.md](../../../summaries/README.md): `title, slug, venue, year,
-   affiliation, labels, paper, project, code, added`, followed by **one sentence**
-   summarizing the paper. Use today's date for `added`. This file is the retrieval record —
-   make the sentence specific (method + key result) so it's searchable.
+4. **Write the summary** by prepending one bullet to the top of the list in
+   [SUMMARIES.md](../../../SUMMARIES.md) (newest first, matching the table). Format:
+
+   ```text
+   - **<Title>** ([paper](<url>)) — <one specific sentence: method + key result>.
+   ```
+
+   Keep it to a single sentence. This file is the retrieval index; do not duplicate
+   labels/venue/year/affiliation here — those live in the README table.
 
 5. **Renumber and regenerate**, from the repo root:
 
@@ -70,6 +73,6 @@ label that doesn't truly apply.
 ## Retrieval
 
 When the user later asks you to find / recall a paper ("which paper used a tactile glove?",
-"the world-model one from 2025"), search the `summaries/` folder (e.g.
-`grep -ri "<keyword>" summaries/`) and answer from the matching frontmatter + summary,
-citing the paper link.
+"the world-model one from 2025"), read [SUMMARIES.md](../../../SUMMARIES.md) (and the
+[README table](../../../README.md) for labels/year/affiliation) and answer from the
+matching entry, citing the paper link.
