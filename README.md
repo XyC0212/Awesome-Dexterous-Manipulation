@@ -19,9 +19,9 @@ Each paper is tagged across the following themes:
 
 <!-- markdownlint-disable MD060 -->
 
-| # | Title | Venue | Year | RL | IL | WM | Tac | HW | Tele | Links |
-|---|-------|-------|------|:--:|:--:|:--:|:--:|:--:|:----:|-------|
-| 1 | T-Rex: Tactile-Reactive Dexterous Manipulation | arXiv | 2026 | | ✅ | | ✅ | ✅ | | [Paper](https://arxiv.org/abs/2606.17055) |
+| # | Title | Venue | Year | Affiliation | RL | IL | WM | Tac | HW | Tele | Links |
+|---|-------|-------|------|-------------|:--:|:--:|:--:|:--:|:--:|:----:|-------|
+| 1 | T-Rex: Tactile-Reactive Dexterous Manipulation | arXiv | 2026 | UC Berkeley | | ✅ | | ✅ | ✅ | | [Paper](https://arxiv.org/abs/2606.17055) |
 
 <!-- markdownlint-enable MD060 -->
 

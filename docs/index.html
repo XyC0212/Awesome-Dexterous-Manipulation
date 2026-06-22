@@ -35,18 +35,18 @@
   <h1>Awesome Dexterous Manipulation</h1>
   <p class="sub">A curated, filterable collection of dexterous robotic manipulation papers.</p>
   <div class="controls">
-    <input id="search" type="search" placeholder="Search title or venue…" autocomplete="off">
+    <input id="search" type="search" placeholder="Search title, venue or affiliation…" autocomplete="off">
     <div class="tagbar" id="tagbar">
       <span class="mode" id="mode" title="Toggle AND/OR matching">match: <b>all</b></span>
       <span class="meta" id="count"></span>
     </div>
   </div>
   <table>
-    <thead><tr><th>#</th><th>Title</th><th>Venue</th><th>Year</th><th>Tags</th><th>Links</th></tr></thead>
+    <thead><tr><th>#</th><th>Title</th><th>Venue</th><th>Year</th><th>Affiliation</th><th>Tags</th><th>Links</th></tr></thead>
     <tbody id="rows"></tbody>
   </table>
 <script>
-const PAPERS = [{"n": 1, "title": "T-Rex: Tactile-Reactive Dexterous Manipulation", "venue": "arXiv", "year": "2026", "tags": ["IL", "Tac", "HW"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2606.17055"}]}];
+const PAPERS = [{"n": 1, "title": "T-Rex: Tactile-Reactive Dexterous Manipulation", "venue": "arXiv", "year": "2026", "affiliation": "UC Berkeley", "tags": ["IL", "Tac", "HW"], "links": [{"label": "Paper", "url": "https://arxiv.org/abs/2606.17055"}]}];
 const TAGS = ["RL", "IL", "WM", "Tac", "HW", "Tele"];
 let active = new Set();
 let andMode = true;
@@ -77,11 +77,12 @@ function build() {
   rows.innerHTML = PAPERS.map(p => {
     const pills = p.tags.map(t => '<span class="pill">'+t+'</span>').join('');
     const links = p.links.map(l => '<a href="'+l.url+'" target="_blank" rel="noopener">'+esc(l.label)+'</a>').join(' · ');
-    return '<tr data-title="'+esc(p.title.toLowerCase())+'" data-venue="'+esc(p.venue.toLowerCase())+'" data-tags="'+p.tags.join(',')+'">'
+    return '<tr data-title="'+esc(p.title.toLowerCase())+'" data-venue="'+esc(p.venue.toLowerCase())+'" data-affil="'+esc((p.affiliation||'').toLowerCase())+'" data-tags="'+p.tags.join(',')+'">'
       + '<td class="num">'+p.n+'</td>'
       + '<td class="title">'+esc(p.title)+'</td>'
       + '<td>'+esc(p.venue)+'</td>'
       + '<td class="year">'+esc(p.year)+'</td>'
+      + '<td>'+esc(p.affiliation||'')+'</td>'
       + '<td>'+pills+'</td>'
       + '<td class="links">'+links+'</td></tr>';
   }).join('');
@@ -95,7 +96,7 @@ function render() {
     const tagOk = active.size === 0 || (andMode
       ? [...active].every(t => tags.includes(t))
       : [...active].some(t => tags.includes(t)));
-    const textOk = !q || tr.dataset.title.includes(q) || tr.dataset.venue.includes(q);
+    const textOk = !q || tr.dataset.title.includes(q) || tr.dataset.venue.includes(q) || tr.dataset.affil.includes(q);
     const ok = tagOk && textOk;
     tr.classList.toggle('hide', !ok);
     if (ok) { shown++;

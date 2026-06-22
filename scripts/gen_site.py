@@ -30,19 +30,20 @@ def parse_readme():
         if not re.match(r"^\|\s*\d+\s*\|", line):
             continue
         cells = [c.strip() for c in line.strip().strip("|").split("|")]
-        # cells: #, Title, Venue, Year, RL, IL, WM, Tac, HW, Tele, Links
-        if len(cells) < 11:
+        # cells: #, Title, Venue, Year, Affiliation, RL, IL, WM, Tac, HW, Tele, Links
+        if len(cells) < 12:
             continue
-        num, title, venue, year = cells[0], cells[1], cells[2], cells[3]
-        tag_cells = cells[4:10]
+        num, title, venue, year, affiliation = cells[0], cells[1], cells[2], cells[3], cells[4]
+        tag_cells = cells[5:11]
         tags = [TAGS[i] for i, c in enumerate(tag_cells) if "✅" in c]
         papers.append({
             "n": int(num),
             "title": title,
             "venue": venue,
             "year": year,
+            "affiliation": affiliation,
             "tags": tags,
-            "links": parse_links(cells[10]),
+            "links": parse_links(cells[11]),
         })
     return papers
 
@@ -84,14 +85,14 @@ HTML = """<!DOCTYPE html>
   <h1>Awesome Dexterous Manipulation</h1>
   <p class="sub">A curated, filterable collection of dexterous robotic manipulation papers.</p>
   <div class="controls">
-    <input id="search" type="search" placeholder="Search title or venue…" autocomplete="off">
+    <input id="search" type="search" placeholder="Search title, venue or affiliation…" autocomplete="off">
     <div class="tagbar" id="tagbar">
       <span class="mode" id="mode" title="Toggle AND/OR matching">match: <b>all</b></span>
       <span class="meta" id="count"></span>
     </div>
   </div>
   <table>
-    <thead><tr><th>#</th><th>Title</th><th>Venue</th><th>Year</th><th>Tags</th><th>Links</th></tr></thead>
+    <thead><tr><th>#</th><th>Title</th><th>Venue</th><th>Year</th><th>Affiliation</th><th>Tags</th><th>Links</th></tr></thead>
     <tbody id="rows"></tbody>
   </table>
 <script>
@@ -126,11 +127,12 @@ function build() {{
   rows.innerHTML = PAPERS.map(p => {{
     const pills = p.tags.map(t => '<span class="pill">'+t+'</span>').join('');
     const links = p.links.map(l => '<a href="'+l.url+'" target="_blank" rel="noopener">'+esc(l.label)+'</a>').join(' · ');
-    return '<tr data-title="'+esc(p.title.toLowerCase())+'" data-venue="'+esc(p.venue.toLowerCase())+'" data-tags="'+p.tags.join(',')+'">'
+    return '<tr data-title="'+esc(p.title.toLowerCase())+'" data-venue="'+esc(p.venue.toLowerCase())+'" data-affil="'+esc((p.affiliation||'').toLowerCase())+'" data-tags="'+p.tags.join(',')+'">'
       + '<td class="num">'+p.n+'</td>'
       + '<td class="title">'+esc(p.title)+'</td>'
       + '<td>'+esc(p.venue)+'</td>'
       + '<td class="year">'+esc(p.year)+'</td>'
+      + '<td>'+esc(p.affiliation||'')+'</td>'
       + '<td>'+pills+'</td>'
       + '<td class="links">'+links+'</td></tr>';
   }}).join('');
@@ -144,7 +146,7 @@ function render() {{
     const tagOk = active.size === 0 || (andMode
       ? [...active].every(t => tags.includes(t))
       : [...active].some(t => tags.includes(t)));
-    const textOk = !q || tr.dataset.title.includes(q) || tr.dataset.venue.includes(q);
+    const textOk = !q || tr.dataset.title.includes(q) || tr.dataset.venue.includes(q) || tr.dataset.affil.includes(q);
     const ok = tagOk && textOk;
     tr.classList.toggle('hide', !ok);
     if (ok) {{ shown++;
