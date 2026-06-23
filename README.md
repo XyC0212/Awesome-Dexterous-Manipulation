@@ -21,10 +21,11 @@ Each paper is tagged across the following themes:
 
 | # | Title | Venue | Year | Affiliation | RL | IL | WM | Tac | HW | Tele | Links |
 |---|-------|-------|------|-------------|:--:|:--:|:--:|:--:|:--:|:----:|-------|
-| 1 | T-Rex: Tactile-Reactive Dexterous Manipulation | arXiv | 2026 | UC Berkeley, NVIDIA | | ✅ | | ✅ | ✅ | | [Paper](https://arxiv.org/abs/2606.17055) |
-| 2 | EgoEngine: From Egocentric Human Videos to High-Fidelity Dexterous Robot Demonstrations | arXiv | 2026 | Georgia Tech | | ✅ | | | | | [Paper](https://arxiv.org/abs/2606.12604) · [Project](https://egoengine.github.io/) |
-| 3 | Video2Sim2Real: Full-Stack Autonomous Dexterous Skill Acquisition from a Single Human Video | arXiv | 2026 | Georgia Tech | ✅ | ✅ | | | ✅ | | [Paper](https://arxiv.org/abs/2606.08828) · [Project](https://video2sim2real.github.io/) |
-| 4 | SimToolReal: An Object-Centric Policy for Zero-Shot Dexterous Tool Manipulation | arXiv | 2026 | Cornell University | ✅ | | | | ✅ | | [Paper](https://arxiv.org/abs/2602.16863) · [Project](https://simtoolreal.github.io/) |
+| 1 | Do as I Do: Dexterous Manipulation Data from Everyday Human Videos | arXiv | 2026 | UC Berkeley | | ✅ | | | ✅ | | [Paper](https://arxiv.org/abs/2606.19333) · [Project](https://do-as-i-do.com/) |
+| 2 | T-Rex: Tactile-Reactive Dexterous Manipulation | arXiv | 2026 | UC Berkeley, NVIDIA | | ✅ | | ✅ | ✅ | | [Paper](https://arxiv.org/abs/2606.17055) |
+| 3 | EgoEngine: From Egocentric Human Videos to High-Fidelity Dexterous Robot Demonstrations | arXiv | 2026 | Georgia Tech | | ✅ | | | | | [Paper](https://arxiv.org/abs/2606.12604) · [Project](https://egoengine.github.io/) |
+| 4 | Video2Sim2Real: Full-Stack Autonomous Dexterous Skill Acquisition from a Single Human Video | arXiv | 2026 | Georgia Tech | ✅ | ✅ | | | ✅ | | [Paper](https://arxiv.org/abs/2606.08828) · [Project](https://video2sim2real.github.io/) |
+| 5 | SimToolReal: An Object-Centric Policy for Zero-Shot Dexterous Tool Manipulation | arXiv | 2026 | Cornell University | ✅ | | | | ✅ | | [Paper](https://arxiv.org/abs/2602.16863) · [Project](https://simtoolreal.github.io/) |
 
 <!-- markdownlint-enable MD060 -->
 
