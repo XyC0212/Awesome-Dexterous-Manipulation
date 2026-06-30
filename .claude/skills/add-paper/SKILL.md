@@ -16,6 +16,7 @@ label that doesn't truly apply.
 - **RL** — Reinforcement Learning
 - **IL** — Imitation Learning / Learning from Demonstration
 - **WM** — World Model / model-based learning
+- **HV** — Learning from Human Video
 - **Tac** — Tactile / visuotactile sensing
 - **HW** — Hardware (dexterous hands, sensors, data-collection devices)
 - **Tele** — Teleoperation & data collection

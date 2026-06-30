@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parent.parent
 README = ROOT / "README.md"
 OUT = ROOT / "docs" / "index.html"
 
-TAGS = ["RL", "IL", "WM", "Tac", "HW", "Tele"]
+TAGS = ["RL", "IL", "WM", "HV", "Tac", "HW", "Tele"]
 LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
 
 
@@ -30,11 +30,11 @@ def parse_readme():
         if not re.match(r"^\|\s*\d+\s*\|", line):
             continue
         cells = [c.strip() for c in line.strip().strip("|").split("|")]
-        # cells: #, Title, Venue, Year, Affiliation, RL, IL, WM, Tac, HW, Tele, Links
-        if len(cells) < 12:
+        # cells: #, Title, Venue, Year, Affiliation, RL, IL, WM, HV, Tac, HW, Tele, Links
+        if len(cells) < 13:
             continue
         num, title, venue, year, affiliation = cells[0], cells[1], cells[2], cells[3], cells[4]
-        tag_cells = cells[5:11]
+        tag_cells = cells[5:12]
         tags = [TAGS[i] for i, c in enumerate(tag_cells) if "✅" in c]
         papers.append({
             "n": int(num),
@@ -43,7 +43,7 @@ def parse_readme():
             "year": year,
             "affiliation": affiliation,
             "tags": tags,
-            "links": parse_links(cells[11]),
+            "links": parse_links(cells[12]),
         })
     return papers
 
