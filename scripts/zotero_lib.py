@@ -120,16 +120,48 @@ def _created_key(resp):
     raise RuntimeError(f"item not created: {resp.get('failed')}")
 
 
-def find_existing(zot, arxiv_id):
-    """Best-effort dedupe: return an existing item key for this arXiv id, or None."""
+PUSHED = SCRIPTS / "zotero_pushed.json"  # local arXiv-id -> Zotero item key record
+
+
+def _load_pushed():
+    if PUSHED.exists():
+        try:
+            return json.loads(PUSHED.read_text(encoding="utf-8"))
+        except Exception:
+            return {}
+    return {}
+
+
+def _save_pushed(mapping):
+    PUSHED.write_text(json.dumps(mapping, indent=2) + "\n", encoding="utf-8")
+
+
+def find_existing(zot, arxiv_id, title, pushed):
+    """Return an existing item key for this arXiv id, or None.
+
+    Checks the local id->key record first (verifying the item still exists, so a
+    paper deleted in Zotero can be re-added), then falls back to a title search
+    confirmed against archiveID/extra. Title/metadata is queryable immediately,
+    unlike full-text search which indexes asynchronously after upload.
+    """
+    key = pushed.get(arxiv_id)
+    if key:
+        try:
+            zot.item(key)
+            return key
+        except Exception:
+            pushed.pop(arxiv_id, None)  # stale record; allow re-add
+    if not title:
+        return None
     try:
-        hits = zot.items(q=arxiv_id, qmode="everything", limit=10)
+        hits = zot.items(q=title, qmode="titleCreatorYear", limit=25)
     except Exception:
         return None
+    tag = f"arxiv:{arxiv_id}".lower()
     for it in hits:
         d = it.get("data", {})
         blob = " ".join(str(d.get(k, "")) for k in ("archiveID", "extra", "url", "DOI")).lower()
-        if arxiv_id.lower() in blob:
+        if tag in blob:
             return d.get("key")
     return None
 
@@ -151,6 +183,8 @@ def push(arxiv_ids, dry_run=False):
             raise ConfigError("pyzotero is not installed. Run:  pip install pyzotero")
         zot = zotero.Zotero(cfg["library_id"], cfg["library_type"], cfg["api_key"])
 
+    pushed = _load_pushed() if not dry_run else {}
+    changed = False
     results = []
     for aid in ids:
         r = {"id": aid, "ok": False, "title": "", "msg": ""}
@@ -167,12 +201,16 @@ def push(arxiv_ids, dry_run=False):
                 r.update(ok=True, msg=f"dry-run OK: item built, PDF downloaded ({size} bytes)")
                 results.append(r)
                 continue
-            existing = find_existing(zot, aid)
+            existing = find_existing(zot, aid, r["title"], pushed)
             if existing:
+                pushed[aid] = existing
+                changed = True
                 r.update(ok=True, skipped=True, msg=f"already in library ({existing})")
                 results.append(r)
                 continue
             key = _created_key(zot.create_items([build_item(aid, meta)]))
+            pushed[aid] = key
+            changed = True
             pdf = download_pdf(aid)
             att = zot.attachment_simple([pdf], key)
             if att.get("failure"):
@@ -183,6 +221,8 @@ def push(arxiv_ids, dry_run=False):
         except Exception as e:  # keep going for the rest
             r["msg"] = f"{type(e).__name__}: {e}"
             results.append(r)
+    if changed and not dry_run:
+        _save_pushed(pushed)
     return results
 
 

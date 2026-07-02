@@ -1,5 +1,6 @@
-# Zotero credentials — local only, never commit
+# Zotero credentials + local push record — local only, never commit
 scripts/zotero_secrets.json
+scripts/zotero_pushed.json
 
 # Python
 __pycache__/
