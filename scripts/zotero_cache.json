@@ -151,5 +151,27 @@
     "abstract": "The ability to manipulate tools significantly expands the set of tasks a robot can perform. Yet, tool manipulation represents a challenging class of dexterity, requiring grasping thin objects, in-hand object rotations, and forceful interactions. Since collecting teleoperation data for these behaviors is challenging, sim-to-real reinforcement learning (RL) is a promising alternative. However, prior approaches typically require substantial engineering effort to model objects and tune reward functions for each task. In this work, we propose SimToolReal, taking a step towards generalizing sim-to-real RL policies for tool manipulation. Instead of focusing on a single object and task, we procedurally generate a large variety of tool-like object primitives in simulation and train a single RL policy with the universal goal of manipulating each object to random goal poses. This approach enables SimToolReal to perform general dexterous tool manipulation at test-time without any object or task-specific training. We demonstrate that SimToolReal outperforms prior retargeting and fixed-grasp methods by 37% while matching the performance of specialist RL policies trained on specific target objects and tasks. Finally, we show that SimToolReal generalizes across a diverse set of everyday tools, achieving strong zero-shot performance over 120 real-world rollouts spanning 24 tasks, 12 object instances, and 6 tool categories.",
     "year": "2026",
     "doi": ""
+  },
+  "2605.16257": {
+    "title": "DexJoCo: A Benchmark and Toolkit for Task-Oriented Dexterous Manipulation on MuJoCo",
+    "authors": [
+      "Hanwen Wang",
+      "Weizhi Zhao",
+      "Xiangyu Wang",
+      "Siyuan Huang",
+      "He Lin",
+      "Boyuan Zheng",
+      "Rongtao Xu",
+      "Gang Wang",
+      "Yao Mu",
+      "He Wang",
+      "Lue Fan",
+      "Hongsheng Li",
+      "Zhaoxiang Zhang",
+      "Tieniu Tan"
+    ],
+    "abstract": "Achieving human-level manipulation requires dexterous robotic hands capable of complex object interactions. Advancing such capabilities further demands standardized benchmarks for systematic evaluation. However, existing dexterous benchmarks lack tasks that reflect the unique manipulation capabilities of dexterous hands over parallel grippers, as well as comprehensive evaluation pipelines. In this paper, we present DexJoCo, a benchmark and toolkit for task-oriented dexterous manipulation, comprising 11 functionally grounded tasks that evaluate tool-use, bimanual coordination, long-horizon execution, and reasoning. We develop a low-cost data collection system and collect 1.1K trajectories across these tasks, with support for domain randomization to assess robustness. We benchmark modern models under diverse settings, including visual and dynamics randomization, multi-task training, and action-head adaptation. Through extensive empirical analysis, we identify several important insights and common limitations of current policies in dexterous manipulation, highlighting key challenges for future research in dexterous hand robot learning. Project page available at: https://dexjoco.github.io",
+    "year": "2026",
+    "doi": ""
   }
 }
