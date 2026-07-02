@@ -50,6 +50,7 @@ PAGE = """<!DOCTYPE html>
   .bar {{ position: sticky; top: 0; background: Canvas; padding: .8rem 0; border-bottom: 1px solid #8884; }}
   button {{ font-size: 1rem; padding: .5rem 1rem; border-radius: 8px; border: 1px solid #8886;
             background: #cc2936; color: #fff; cursor: pointer; }}
+  button.add {{ font-size: .8rem; padding: .15rem .55rem; margin-left: .5rem; }}
   button:disabled {{ opacity: .5; cursor: default; }}
   .res {{ font-size: .85rem; margin-left: 1.7rem; }}
 </style></head>
@@ -64,26 +65,40 @@ PAGE = """<!DOCTYPE html>
   <ul id="list">{items}</ul>
 <script>
 const list = document.getElementById('list');
+
+async function addIds(ids) {{
+  const resp = await fetch('/add', {{method:'POST', headers:{{'Content-Type':'application/json'}},
+                                     body: JSON.stringify({{ids}})}});
+  const data = await resp.json();
+  for (const r of data) {{
+    const el = document.getElementById('res-'+r.id);
+    if (el) {{ el.textContent = (r.ok ? '✓ ' : '✗ ') + r.msg; el.className = 'res ' + (r.ok ? 'ok' : 'bad'); }}
+  }}
+  return data;
+}}
+
+// one click per paper
+list.querySelectorAll('button.add').forEach(btn => {{
+  btn.onclick = async () => {{
+    const el = document.getElementById('res-'+btn.dataset.id);
+    btn.disabled = true; if (el) {{ el.textContent = '… working'; el.className = 'res'; }}
+    try {{ await addIds([btn.dataset.id]); }}
+    catch (e) {{ if (el) {{ el.textContent = '✗ ' + e; el.className = 'res bad'; }} }}
+    btn.disabled = false;
+  }};
+}});
+
+// or select several and add in one go
 document.getElementById('all').onchange = e =>
   list.querySelectorAll('input[type=checkbox]').forEach(c => c.checked = e.target.checked);
-
 document.getElementById('go').onclick = async () => {{
-  const boxes = [...list.querySelectorAll('input[type=checkbox]:checked')];
-  if (!boxes.length) return;
-  const ids = boxes.map(b => b.value);
+  const ids = [...list.querySelectorAll('input[type=checkbox]:checked')].map(b => b.value);
+  if (!ids.length) return;
   const go = document.getElementById('go'), status = document.getElementById('status');
   go.disabled = true; status.textContent = ' working… (downloading PDFs + uploading)';
-  boxes.forEach(b => {{ const r = document.getElementById('res-'+b.value); if (r) r.textContent = '…'; }});
-  try {{
-    const resp = await fetch('/add', {{method:'POST', headers:{{'Content-Type':'application/json'}},
-                                       body: JSON.stringify({{ids}})}});
-    const data = await resp.json();
-    for (const r of data) {{
-      const el = document.getElementById('res-'+r.id);
-      if (el) {{ el.textContent = (r.ok ? '✓ ' : '✗ ') + r.msg; el.className = 'res ' + (r.ok ? 'ok' : 'bad'); }}
-    }}
-    status.textContent = ' done';
-  }} catch (e) {{ status.textContent = ' error: ' + e; }}
+  ids.forEach(id => {{ const r = document.getElementById('res-'+id); if (r) r.textContent = '…'; }});
+  try {{ await addIds(ids); status.textContent = ' done'; }}
+  catch (e) {{ status.textContent = ' error: ' + e; }}
   go.disabled = false;
 }};
 </script>
@@ -92,12 +107,17 @@ document.getElementById('go').onclick = async () => {{
 
 
 def render_page():
-    configured = load_config() is not None
-    banner = ("" if configured else
-              f'<div class="warn">{SETUP_HELP}</div>')
+    cfg = load_config()
+    if cfg:
+        banner = (f'<p style="color:#777;font-size:.9rem;margin:.2rem 0 1rem">'
+                  f'Papers are added to your <b>{esc(cfg["collection"])}</b> collection, '
+                  f'with the arXiv PDF attached.</p>')
+    else:
+        banner = f'<div class="warn">{SETUP_HELP}</div>'
     items = "".join(
         f'<li><label><input type="checkbox" value="{p["id"]}"> {esc(p["title"])}'
         f'<span class="yr">{esc(p["venue"])} {esc(p["year"])}</span></label>'
+        f'<button class="add" data-id="{p["id"]}">+ Zotero</button>'
         f'<div class="res" id="res-{p["id"]}"></div></li>'
         for p in list_papers()
     )

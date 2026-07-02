@@ -35,6 +35,7 @@ from gen_site import ARXIV_RE, fetch_arxiv_meta, load_cache  # noqa: E402
 SCRIPTS = Path(__file__).resolve().parent
 SECRETS = SCRIPTS / "zotero_secrets.json"
 UA = "awesome-dexman-zotero/1.0"
+DEFAULT_COLLECTION = "Dexterous Manipulation"  # papers land here; created if missing
 
 SETUP_HELP = (
     "Zotero is not configured. Set env vars ZOTERO_API_KEY and ZOTERO_LIBRARY_ID,\n"
@@ -51,18 +52,21 @@ class ConfigError(RuntimeError):
 
 
 def load_config():
-    """Return {api_key, library_id, library_type} or None if not configured."""
-    api_key = os.environ.get("ZOTERO_API_KEY")
-    library_id = os.environ.get("ZOTERO_LIBRARY_ID")
-    library_type = os.environ.get("ZOTERO_LIBRARY_TYPE", "user")
-    if (not api_key or not library_id) and SECRETS.exists():
-        data = json.loads(SECRETS.read_text(encoding="utf-8"))
-        api_key = api_key or data.get("api_key")
-        library_id = library_id or data.get("library_id")
-        library_type = data.get("library_type", library_type)
+    """Return {api_key, library_id, library_type, collection} or None if unset."""
+    data = {}
+    if SECRETS.exists():
+        try:
+            data = json.loads(SECRETS.read_text(encoding="utf-8"))
+        except Exception:
+            data = {}
+    api_key = os.environ.get("ZOTERO_API_KEY") or data.get("api_key")
+    library_id = os.environ.get("ZOTERO_LIBRARY_ID") or data.get("library_id")
+    library_type = os.environ.get("ZOTERO_LIBRARY_TYPE") or data.get("library_type") or "user"
+    collection = os.environ.get("ZOTERO_COLLECTION") or data.get("collection") or DEFAULT_COLLECTION
     if not api_key or not library_id:
         return None
-    return {"api_key": api_key, "library_id": str(library_id), "library_type": library_type}
+    return {"api_key": api_key, "library_id": str(library_id),
+            "library_type": library_type, "collection": collection}
 
 
 def extract_id(token):
@@ -78,7 +82,7 @@ def split_name(name):
     return {"creatorType": "author", "firstName": " ".join(parts[:-1]), "lastName": parts[-1]}
 
 
-def build_item(arxiv_id, meta):
+def build_item(arxiv_id, meta, collections=None):
     """A Zotero 'preprint' item dict built from arXiv metadata."""
     meta = meta or {}
     item = {
@@ -93,12 +97,33 @@ def build_item(arxiv_id, meta):
         "libraryCatalog": "arXiv.org",
         "extra": f"arXiv:{arxiv_id}",
         "tags": [],
-        "collections": [],
+        "collections": list(collections or []),
         "relations": {},
     }
     if meta.get("doi"):
         item["DOI"] = meta["doi"]
     return item
+
+
+def get_collection_key(zot, name):
+    """Return the key of the collection called `name`, creating it if absent."""
+    if not name:
+        return None
+    for col in zot.collections():
+        if col["data"]["name"].strip().lower() == name.strip().lower():
+            return col["data"]["key"]
+    return _created_key(zot.create_collections([{"name": name}]))
+
+
+def ensure_in_collection(zot, item_key, col_key):
+    """Add an already-existing item to the collection if it isn't there yet."""
+    if not col_key:
+        return
+    it = zot.item(item_key)
+    cols = it["data"].get("collections", [])
+    if col_key not in cols:
+        it["data"]["collections"] = cols + [col_key]
+        zot.update_item(it)
 
 
 def download_pdf(arxiv_id, dest_dir=None):
@@ -183,6 +208,8 @@ def push(arxiv_ids, dry_run=False):
             raise ConfigError("pyzotero is not installed. Run:  pip install pyzotero")
         zot = zotero.Zotero(cfg["library_id"], cfg["library_type"], cfg["api_key"])
 
+    col_name = cfg["collection"] if not dry_run else None
+    col_key = get_collection_key(zot, col_name) if col_name else None
     pushed = _load_pushed() if not dry_run else {}
     changed = False
     results = []
@@ -201,14 +228,17 @@ def push(arxiv_ids, dry_run=False):
                 r.update(ok=True, msg=f"dry-run OK: item built, PDF downloaded ({size} bytes)")
                 results.append(r)
                 continue
+            where = f" → {col_name}" if col_name else ""
             existing = find_existing(zot, aid, r["title"], pushed)
             if existing:
                 pushed[aid] = existing
                 changed = True
-                r.update(ok=True, skipped=True, msg=f"already in library ({existing})")
+                ensure_in_collection(zot, existing, col_key)
+                r.update(ok=True, skipped=True, msg=f"already in library ({existing}){where}")
                 results.append(r)
                 continue
-            key = _created_key(zot.create_items([build_item(aid, meta)]))
+            item = build_item(aid, meta, [col_key] if col_key else [])
+            key = _created_key(zot.create_items([item]))
             pushed[aid] = key
             changed = True
             pdf = download_pdf(aid)
@@ -216,7 +246,7 @@ def push(arxiv_ids, dry_run=False):
             if att.get("failure"):
                 r.update(ok=True, msg=f"item added ({key}) but PDF upload failed: {att['failure']}")
             else:
-                r.update(ok=True, msg=f"added + PDF attached ({key})")
+                r.update(ok=True, msg=f"added + PDF attached ({key}){where}")
             results.append(r)
         except Exception as e:  # keep going for the rest
             r["msg"] = f"{type(e).__name__}: {e}"
