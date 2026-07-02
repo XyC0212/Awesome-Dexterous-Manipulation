@@ -1,0 +1,12 @@
+# Zotero credentials — local only, never commit
+scripts/zotero_secrets.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Downloaded claude-science binary (not part of the repo)
+/claude-science
+/linux-x64

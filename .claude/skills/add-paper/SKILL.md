@@ -74,8 +74,21 @@ label that doesn't truly apply.
    public on GitHub Pages and wants new papers to go live. If you are unsure whether to
    push, ask.
 
-7. **Report** to the user: the new table row, the chosen labels, the one-sentence summary,
-   and the summary file path.
+7. **Push to the user's Zotero (auto, best-effort).** For an arXiv paper, run from the
+   repo root:
+
+   ```bash
+   python3 scripts/zotero_lib.py <arxiv-id> --best-effort
+   ```
+
+   This creates a Zotero item and uploads the PDF via the Zotero Web API (needs network,
+   so allow it). `--best-effort` means it exits 0 and just prints a notice if Zotero is not
+   configured (`scripts/zotero_secrets.json` / env vars) or `pyzotero` is missing — never
+   let this block the flow. Tell the user the result: added + PDF, already-in-library, or
+   the setup notice. Skip this step for non-arXiv papers.
+
+8. **Report** to the user: the new table row, the chosen labels, the one-sentence summary,
+   the summary file path, and the Zotero push result.
 
 ## Retrieval
 
