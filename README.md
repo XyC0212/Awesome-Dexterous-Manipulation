@@ -22,12 +22,13 @@ Each paper is tagged across the following themes:
 
 | # | Title | Venue | Year | Affiliation | RL | IL | WM | HV | Tac | HW | Tele | Links |
 |---|-------|-------|------|-------------|:--:|:--:|:--:|:--:|:--:|:--:|:----:|-------|
-| 1 | HumanEgo: Zero-Shot Robot Learning from Minutes of Human Egocentric Videos | arXiv | 2026 | University of Maryland | | ✅ | | ✅ | | | | [Paper](https://arxiv.org/abs/2605.24934) · [Project](https://humanego-ai.github.io) · [Code](https://github.com/TX-Leo/HumanEgo) |
-| 2 | Do as I Do: Dexterous Manipulation Data from Everyday Human Videos | arXiv | 2026 | UC Berkeley | | ✅ | | ✅ | | ✅ | | [Paper](https://arxiv.org/abs/2606.19333) · [Project](https://do-as-i-do.com/) |
-| 3 | T-Rex: Tactile-Reactive Dexterous Manipulation | arXiv | 2026 | UC Berkeley, NVIDIA | | ✅ | | ✅ | ✅ | ✅ | | [Paper](https://arxiv.org/abs/2606.17055) |
-| 4 | EgoEngine: From Egocentric Human Videos to High-Fidelity Dexterous Robot Demonstrations | arXiv | 2026 | Georgia Tech | | ✅ | | ✅ | | | | [Paper](https://arxiv.org/abs/2606.12604) · [Project](https://egoengine.github.io/) |
-| 5 | Video2Sim2Real: Full-Stack Autonomous Dexterous Skill Acquisition from a Single Human Video | arXiv | 2026 | Georgia Tech | ✅ | ✅ | | ✅ | | ✅ | | [Paper](https://arxiv.org/abs/2606.08828) · [Project](https://video2sim2real.github.io/) |
-| 6 | SimToolReal: An Object-Centric Policy for Zero-Shot Dexterous Tool Manipulation | arXiv | 2026 | Cornell University | ✅ | | | ✅ | | ✅ | | [Paper](https://arxiv.org/abs/2602.16863) · [Project](https://simtoolreal.github.io/) |
+| 1 | CHORD: Learning Dexterous Manipulation Using Contact Wrench Guidance from Human Demonstration | arXiv | 2026 | NVIDIA | ✅ | ✅ | | ✅ | | | | [Paper](https://arxiv.org/abs/2607.00033) · [Project](https://nvidia-isaac.github.io/video_to_data/chord/) |
+| 2 | HumanEgo: Zero-Shot Robot Learning from Minutes of Human Egocentric Videos | arXiv | 2026 | University of Maryland | | ✅ | | ✅ | | | | [Paper](https://arxiv.org/abs/2605.24934) · [Project](https://humanego-ai.github.io) · [Code](https://github.com/TX-Leo/HumanEgo) |
+| 3 | Do as I Do: Dexterous Manipulation Data from Everyday Human Videos | arXiv | 2026 | UC Berkeley | | ✅ | | ✅ | | ✅ | | [Paper](https://arxiv.org/abs/2606.19333) · [Project](https://do-as-i-do.com/) |
+| 4 | T-Rex: Tactile-Reactive Dexterous Manipulation | arXiv | 2026 | UC Berkeley, NVIDIA | | ✅ | | ✅ | ✅ | ✅ | | [Paper](https://arxiv.org/abs/2606.17055) |
+| 5 | EgoEngine: From Egocentric Human Videos to High-Fidelity Dexterous Robot Demonstrations | arXiv | 2026 | Georgia Tech | | ✅ | | ✅ | | | | [Paper](https://arxiv.org/abs/2606.12604) · [Project](https://egoengine.github.io/) |
+| 6 | Video2Sim2Real: Full-Stack Autonomous Dexterous Skill Acquisition from a Single Human Video | arXiv | 2026 | Georgia Tech | ✅ | ✅ | | ✅ | | ✅ | | [Paper](https://arxiv.org/abs/2606.08828) · [Project](https://video2sim2real.github.io/) |
+| 7 | SimToolReal: An Object-Centric Policy for Zero-Shot Dexterous Tool Manipulation | arXiv | 2026 | Cornell University | ✅ | | | ✅ | | ✅ | | [Paper](https://arxiv.org/abs/2602.16863) · [Project](https://simtoolreal.github.io/) |
 
 <!-- markdownlint-enable MD060 -->
 
