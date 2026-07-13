@@ -22,18 +22,19 @@ Each paper is tagged across the following themes:
 
 | # | Title | Venue | Year | Affiliation | RL | IL | WM | HV | Tac | HW | Tele | Links |
 |---|-------|-------|------|-------------|:--:|:--:|:--:|:--:|:--:|:--:|:----:|-------|
-| 1 | AnyDexRT: Calibration-Free Dexterous Hand Retargeting with Few-Shot Human Guidance | arXiv | 2026 | Noematrix | | | | | | ✅ | ✅ | [Paper](https://arxiv.org/abs/2607.08341) · [Project](https://chenxi-wang.github.io/projects/anydexrt) |
-| 2 | DexVerse: A Modular Benchmark for Multi-Task, Multi-Embodiment Dexterous Manipulation | arXiv | 2026 | UNC Chapel Hill | | ✅ | | | | ✅ | ✅ | [Paper](https://arxiv.org/abs/2607.08751) · [Project](https://ycyao216.github.io/DexVerse.site/) · [Code](https://github.com/ycyao216/DexVerse) |
-| 3 | Dex4D: Task-Agnostic Point Track Policy for Sim-to-Real Dexterous Manipulation | arXiv | 2026 | Carnegie Mellon University | ✅ | ✅ | ✅ | | | | | [Paper](https://arxiv.org/abs/2602.15828) · [Project](https://dex4d.github.io/) |
-| 4 | Play2Perfect: What Matters in Dexterous Play Pretraining for Precise Assembly? | arXiv | 2026 | Stanford University | ✅ | | | | | | | [Paper](https://arxiv.org/abs/2606.26428) · [Project](https://play2perfect.github.io) |
-| 5 | DexJoCo: A Benchmark and Toolkit for Task-Oriented Dexterous Manipulation on MuJoCo | arXiv | 2026 | CASIA | | ✅ | | | | ✅ | ✅ | [Paper](https://arxiv.org/abs/2605.16257) · [Project](https://dexjoco.github.io) |
-| 6 | CHORD: Learning Dexterous Manipulation Using Contact Wrench Guidance from Human Demonstration | arXiv | 2026 | NVIDIA | ✅ | ✅ | | ✅ | | | | [Paper](https://arxiv.org/abs/2607.00033) · [Project](https://nvidia-isaac.github.io/video_to_data/chord/) |
-| 7 | HumanEgo: Zero-Shot Robot Learning from Minutes of Human Egocentric Videos | arXiv | 2026 | University of Maryland | | ✅ | | ✅ | | | | [Paper](https://arxiv.org/abs/2605.24934) · [Project](https://humanego-ai.github.io) · [Code](https://github.com/TX-Leo/HumanEgo) |
-| 8 | Do as I Do: Dexterous Manipulation Data from Everyday Human Videos | arXiv | 2026 | UC Berkeley | | ✅ | | ✅ | | ✅ | | [Paper](https://arxiv.org/abs/2606.19333) · [Project](https://do-as-i-do.com/) |
-| 9 | T-Rex: Tactile-Reactive Dexterous Manipulation | arXiv | 2026 | UC Berkeley, NVIDIA | | ✅ | | ✅ | ✅ | ✅ | | [Paper](https://arxiv.org/abs/2606.17055) |
-| 10 | EgoEngine: From Egocentric Human Videos to High-Fidelity Dexterous Robot Demonstrations | arXiv | 2026 | Georgia Tech | | ✅ | | ✅ | | | | [Paper](https://arxiv.org/abs/2606.12604) · [Project](https://egoengine.github.io/) |
-| 11 | Video2Sim2Real: Full-Stack Autonomous Dexterous Skill Acquisition from a Single Human Video | arXiv | 2026 | Georgia Tech | ✅ | ✅ | | ✅ | | ✅ | | [Paper](https://arxiv.org/abs/2606.08828) · [Project](https://video2sim2real.github.io/) |
-| 12 | SimToolReal: An Object-Centric Policy for Zero-Shot Dexterous Tool Manipulation | arXiv | 2026 | Cornell University | ✅ | | | ✅ | | ✅ | | [Paper](https://arxiv.org/abs/2602.16863) · [Project](https://simtoolreal.github.io/) |
+| 1 | RynnWorld-Teleop: An Action-Conditioned World Model for Digital Teleoperation | arXiv | 2026 | Alibaba DAMO Academy | | ✅ | ✅ | ✅ | | | ✅ | [Paper](https://arxiv.org/abs/2607.06558) · [Project](https://alibaba-damo-academy.github.io/RynnWorld-Teleop.github.io) · [Code](https://github.com/alibaba-damo-academy/RynnWorld-Teleop) |
+| 2 | AnyDexRT: Calibration-Free Dexterous Hand Retargeting with Few-Shot Human Guidance | arXiv | 2026 | Noematrix | | | | | | ✅ | ✅ | [Paper](https://arxiv.org/abs/2607.08341) · [Project](https://chenxi-wang.github.io/projects/anydexrt) |
+| 3 | DexVerse: A Modular Benchmark for Multi-Task, Multi-Embodiment Dexterous Manipulation | arXiv | 2026 | UNC Chapel Hill | | ✅ | | | | ✅ | ✅ | [Paper](https://arxiv.org/abs/2607.08751) · [Project](https://ycyao216.github.io/DexVerse.site/) · [Code](https://github.com/ycyao216/DexVerse) |
+| 4 | Dex4D: Task-Agnostic Point Track Policy for Sim-to-Real Dexterous Manipulation | arXiv | 2026 | Carnegie Mellon University | ✅ | ✅ | ✅ | | | | | [Paper](https://arxiv.org/abs/2602.15828) · [Project](https://dex4d.github.io/) |
+| 5 | Play2Perfect: What Matters in Dexterous Play Pretraining for Precise Assembly? | arXiv | 2026 | Stanford University | ✅ | | | | | | | [Paper](https://arxiv.org/abs/2606.26428) · [Project](https://play2perfect.github.io) |
+| 6 | DexJoCo: A Benchmark and Toolkit for Task-Oriented Dexterous Manipulation on MuJoCo | arXiv | 2026 | CASIA | | ✅ | | | | ✅ | ✅ | [Paper](https://arxiv.org/abs/2605.16257) · [Project](https://dexjoco.github.io) |
+| 7 | CHORD: Learning Dexterous Manipulation Using Contact Wrench Guidance from Human Demonstration | arXiv | 2026 | NVIDIA | ✅ | ✅ | | ✅ | | | | [Paper](https://arxiv.org/abs/2607.00033) · [Project](https://nvidia-isaac.github.io/video_to_data/chord/) |
+| 8 | HumanEgo: Zero-Shot Robot Learning from Minutes of Human Egocentric Videos | arXiv | 2026 | University of Maryland | | ✅ | | ✅ | | | | [Paper](https://arxiv.org/abs/2605.24934) · [Project](https://humanego-ai.github.io) · [Code](https://github.com/TX-Leo/HumanEgo) |
+| 9 | Do as I Do: Dexterous Manipulation Data from Everyday Human Videos | arXiv | 2026 | UC Berkeley | | ✅ | | ✅ | | ✅ | | [Paper](https://arxiv.org/abs/2606.19333) · [Project](https://do-as-i-do.com/) |
+| 10 | T-Rex: Tactile-Reactive Dexterous Manipulation | arXiv | 2026 | UC Berkeley, NVIDIA | | ✅ | | ✅ | ✅ | ✅ | | [Paper](https://arxiv.org/abs/2606.17055) |
+| 11 | EgoEngine: From Egocentric Human Videos to High-Fidelity Dexterous Robot Demonstrations | arXiv | 2026 | Georgia Tech | | ✅ | | ✅ | | | | [Paper](https://arxiv.org/abs/2606.12604) · [Project](https://egoengine.github.io/) |
+| 12 | Video2Sim2Real: Full-Stack Autonomous Dexterous Skill Acquisition from a Single Human Video | arXiv | 2026 | Georgia Tech | ✅ | ✅ | | ✅ | | ✅ | | [Paper](https://arxiv.org/abs/2606.08828) · [Project](https://video2sim2real.github.io/) |
+| 13 | SimToolReal: An Object-Centric Policy for Zero-Shot Dexterous Tool Manipulation | arXiv | 2026 | Cornell University | ✅ | | | ✅ | | ✅ | | [Paper](https://arxiv.org/abs/2602.16863) · [Project](https://simtoolreal.github.io/) |
 
 <!-- markdownlint-enable MD060 -->
 
