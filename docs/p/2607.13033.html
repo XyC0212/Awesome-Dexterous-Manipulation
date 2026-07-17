@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DenseReward: Dense Reward Learning via Failure Synthesis for Robotic Manipulation — Awesome Dexterous Manipulation</title>
+<meta name="citation_title" content="DenseReward: Dense Reward Learning via Failure Synthesis for Robotic Manipulation">
+<meta name="citation_author" content="Fang, Yu">
+<meta name="citation_author" content="Dong, Wanxi">
+<meta name="citation_author" content="Liu, Jiaqi">
+<meta name="citation_author" content="Yang, Yue">
+<meta name="citation_author" content="Huo, Mingxiao">
+<meta name="citation_author" content="Mu, Yao">
+<meta name="citation_author" content="Yao, Huaxiu">
+<meta name="citation_author" content="Li, Li Erran">
+<meta name="citation_author" content="Szafir, Daniel">
+<meta name="citation_author" content="Ding, Mingyu">
+<meta name="citation_publication_date" content="2026">
+<meta name="citation_journal_title" content="arXiv">
+<meta name="citation_arxiv_id" content="2607.13033">
+<meta name="citation_pdf_url" content="https://arxiv.org/pdf/2607.13033.pdf">
+<meta name="citation_public_url" content="https://arxiv.org/abs/2607.13033">
+<meta name="citation_abstract" content="Reinforcement learning holds great promise for improving robot policies beyond the limits of imitation learning. However, its practical adoption remains bottlenecked by the lack of reliable vision-language reward models that provide dense and informative feedback. Two key challenges remain: acquiring diverse failure data at scale and obtaining fine-grained reward signals beyond sparse trajectory-level success labels. Collecting failure trajectories typically requires laborious human effort, while pseudo-failures constructed by relabeling successful demonstrations fail to capture the diverse physical failure modes that arise during robot execution. Meanwhile, existing reward models often predict sparse binary or trajectory-level rewards, which provide limited guidance for efficient policy optimization. We introduce DenseReward, a dense robotic reward model that addresses both challenges. To train DenseReward, we develop an automated failure data generation pipeline that synthesizes physically realistic failure trajectories in simulation without human labeling, covering diverse failure modes such as collisions, missed grasps, object drops, and recovery behaviors. DenseReward predicts dense frame-level reward scores from visual observations and language instructions, enabling fine-grained estimation of task progress throughout an episode. Experiments show that DenseReward outperforms general-purpose VLMs and existing robotic reward models in dense reward prediction across both simulated and real-world manipulation. We further demonstrate that DenseReward provides effective reward guidance for downstream model predictive control and reinforcement learning. We release the dataset, trained reward models, and evaluation suite to support the development of failure-aware dense reward modeling for robot learning.">
+<meta name="citation_doi" content="10.48550/arXiv.2607.13033">
+<style>
+  body { font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+         margin: 0 auto; max-width: 760px; padding: 1.5rem; line-height: 1.5; }
+  a { color: #2563eb; }
+  h1 { font-size: 1.35rem; margin: .3rem 0; }
+  h2 { font-size: 1rem; color: #777; margin: 1.5rem 0 .4rem; }
+  .authors { color: #444; }
+  .venue { color: #777; margin: .2rem 0 1rem; }
+  .save { background: #cc29361a; border: 1px solid #cc293655; border-radius: 8px;
+           padding: .6rem .8rem; }
+  .save b { color: #cc2936; }
+  .links a { margin-right: .8rem; }
+  .back { color: #777; font-size: .9rem; }
+</style>
+</head>
+<body>
+  <p><a class="back" href="../index.html">← All papers</a></p>
+  <h1>DenseReward: Dense Reward Learning via Failure Synthesis for Robotic Manipulation</h1>
+  <p class="authors">Yu Fang, Wanxi Dong, Jiaqi Liu, Yue Yang, Mingxiao Huo, Yao Mu, Huaxiu Yao, Li Erran Li, Daniel Szafir, Mingyu Ding</p>
+  <p class="venue">arXiv · 2026</p>
+  <p class="save">📚 Click your <b>Zotero Connector</b> toolbar button now to save this paper
+     <b>with its PDF</b> attached.</p>
+  <p class="links"><a href="https://arxiv.org/abs/2607.13033" target="_blank" rel="noopener">Paper</a> · <a href="https://dense-reward.github.io/" target="_blank" rel="noopener">Project</a> · <a href="https://arxiv.org/pdf/2607.13033.pdf" target="_blank" rel="noopener">PDF</a></p>
+  <h2>Abstract</h2>
+  <p>Reinforcement learning holds great promise for improving robot policies beyond the limits of imitation learning. However, its practical adoption remains bottlenecked by the lack of reliable vision-language reward models that provide dense and informative feedback. Two key challenges remain: acquiring diverse failure data at scale and obtaining fine-grained reward signals beyond sparse trajectory-level success labels. Collecting failure trajectories typically requires laborious human effort, while pseudo-failures constructed by relabeling successful demonstrations fail to capture the diverse physical failure modes that arise during robot execution. Meanwhile, existing reward models often predict sparse binary or trajectory-level rewards, which provide limited guidance for efficient policy optimization. We introduce DenseReward, a dense robotic reward model that addresses both challenges. To train DenseReward, we develop an automated failure data generation pipeline that synthesizes physically realistic failure trajectories in simulation without human labeling, covering diverse failure modes such as collisions, missed grasps, object drops, and recovery behaviors. DenseReward predicts dense frame-level reward scores from visual observations and language instructions, enabling fine-grained estimation of task progress throughout an episode. Experiments show that DenseReward outperforms general-purpose VLMs and existing robotic reward models in dense reward prediction across both simulated and real-world manipulation. We further demonstrate that DenseReward provides effective reward guidance for downstream model predictive control and reinforcement learning. We release the dataset, trained reward models, and evaluation suite to support the development of failure-aware dense reward modeling for robot learning.</p>
+</body>
+</html>
