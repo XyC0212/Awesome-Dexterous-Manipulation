@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VINE: Taming Generative Control Policies for Reinforcement Learning — Awesome Dexterous Manipulation</title>
+<meta name="citation_title" content="VINE: Taming Generative Control Policies for Reinforcement Learning">
+<meta name="citation_author" content="Yang, Rushuai">
+<meta name="citation_author" content="Han, Zhuo">
+<meta name="citation_author" content="Li, Houlin">
+<meta name="citation_author" content="Wang, Hecheng">
+<meta name="citation_author" content="Wu, Zhichao">
+<meta name="citation_author" content="Zhang, Rui">
+<meta name="citation_author" content="Zhang, Zhaowei">
+<meta name="citation_author" content="Chen, Zihong">
+<meta name="citation_author" content="Yan, Xiaohan">
+<meta name="citation_author" content="Liu, Chiming">
+<meta name="citation_author" content="Chen, Yi">
+<meta name="citation_author" content="Shan, Wei">
+<meta name="citation_author" content="Yao, Maoqing">
+<meta name="citation_publication_date" content="2026">
+<meta name="citation_journal_title" content="arXiv">
+<meta name="citation_arxiv_id" content="2607.10369">
+<meta name="citation_pdf_url" content="https://arxiv.org/pdf/2607.10369.pdf">
+<meta name="citation_public_url" content="https://arxiv.org/abs/2607.10369">
+<meta name="citation_abstract" content="Flow-matching policies have emerged as an effective policy parameterization for robot learning. They iteratively generate actions from noise, enabling highly expressive modeling of complex and multimodal action distributions. However, prior works observed that scaling these policies with value-gradient reinforcement learning (RL) often leads to training instability. Existing methods attribute this instability to iterative generation and therefore avoid end-to-end value-gradient optimization by sacrificing iterative generation, high expressiveness, or value-gradient optimization. Contrary to prior belief, we show the instability does not stem from iterative generation itself, but from the vanilla sampling strategy originally designed for behavior cloning, which becomes brittle under value-gradient RL. Motivated by this insight, we propose VINE, an RL-oriented sampling method that enables stable end-to-end value-gradient optimization for flow-matching policies. Instead of following a single flow trajectory, VINE reconstructs a new interpolation state at every denoising step, creating a stable differentiable path for value-gradient propagation while remaining compatible with the original flow-matching denoising process. As a result, VINE preserves the expressiveness and iterative generation of flow-matching without sacrificing end-to-end value-gradient optimization. Despite performing end-to-end backpropagation through all ten denoising steps, VINE achieves stable policy improvement and consistently outperforms state-of-the-art RL methods on the OGBench offline RL benchmark and real-world robotic manipulation task. Videos are available on our website: https://agibottech.github.io/vine.">
+<style>
+  body { font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+         margin: 0 auto; max-width: 760px; padding: 1.5rem; line-height: 1.5; }
+  a { color: #2563eb; }
+  h1 { font-size: 1.35rem; margin: .3rem 0; }
+  h2 { font-size: 1rem; color: #777; margin: 1.5rem 0 .4rem; }
+  .authors { color: #444; }
+  .venue { color: #777; margin: .2rem 0 1rem; }
+  .save { background: #cc29361a; border: 1px solid #cc293655; border-radius: 8px;
+           padding: .6rem .8rem; }
+  .save b { color: #cc2936; }
+  .links a { margin-right: .8rem; }
+  .back { color: #777; font-size: .9rem; }
+</style>
+</head>
+<body>
+  <p><a class="back" href="../index.html">← All papers</a></p>
+  <h1>VINE: Taming Generative Control Policies for Reinforcement Learning</h1>
+  <p class="authors">Rushuai Yang, Zhuo Han, Houlin Li, Hecheng Wang, Zhichao Wu, Rui Zhang, Zhaowei Zhang, Zihong Chen, Xiaohan Yan, Chiming Liu, Yi Chen, Wei Shan, Maoqing Yao</p>
+  <p class="venue">arXiv · 2026</p>
+  <p class="save">📚 Click your <b>Zotero Connector</b> toolbar button now to save this paper
+     <b>with its PDF</b> attached.</p>
+  <p class="links"><a href="https://arxiv.org/abs/2607.10369" target="_blank" rel="noopener">Paper</a> · <a href="https://agibottech.github.io/vine" target="_blank" rel="noopener">Project</a> · <a href="https://arxiv.org/pdf/2607.10369.pdf" target="_blank" rel="noopener">PDF</a></p>
+  <h2>Abstract</h2>
+  <p>Flow-matching policies have emerged as an effective policy parameterization for robot learning. They iteratively generate actions from noise, enabling highly expressive modeling of complex and multimodal action distributions. However, prior works observed that scaling these policies with value-gradient reinforcement learning (RL) often leads to training instability. Existing methods attribute this instability to iterative generation and therefore avoid end-to-end value-gradient optimization by sacrificing iterative generation, high expressiveness, or value-gradient optimization. Contrary to prior belief, we show the instability does not stem from iterative generation itself, but from the vanilla sampling strategy originally designed for behavior cloning, which becomes brittle under value-gradient RL. Motivated by this insight, we propose VINE, an RL-oriented sampling method that enables stable end-to-end value-gradient optimization for flow-matching policies. Instead of following a single flow trajectory, VINE reconstructs a new interpolation state at every denoising step, creating a stable differentiable path for value-gradient propagation while remaining compatible with the original flow-matching denoising process. As a result, VINE preserves the expressiveness and iterative generation of flow-matching without sacrificing end-to-end value-gradient optimization. Despite performing end-to-end backpropagation through all ten denoising steps, VINE achieves stable policy improvement and consistently outperforms state-of-the-art RL methods on the OGBench offline RL benchmark and real-world robotic manipulation task. Videos are available on our website: https://agibottech.github.io/vine.</p>
+</body>
+</html>
