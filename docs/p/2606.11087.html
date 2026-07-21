@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test-Time Gradient Guidance of Flow Policies in Reinforcement Learning — Awesome Dexterous Manipulation</title>
+<meta name="citation_title" content="Test-Time Gradient Guidance of Flow Policies in Reinforcement Learning">
+<meta name="citation_author" content="Zhou, Zhiyuan">
+<meta name="citation_author" content="Peng, Andy">
+<meta name="citation_author" content="Xu, Charles">
+<meta name="citation_author" content="Li, Qiyang">
+<meta name="citation_author" content="Springenberg, Tobias">
+<meta name="citation_author" content="Frans, Kevin">
+<meta name="citation_author" content="Levine, Sergey">
+<meta name="citation_publication_date" content="2026">
+<meta name="citation_journal_title" content="arXiv">
+<meta name="citation_arxiv_id" content="2606.11087">
+<meta name="citation_pdf_url" content="https://arxiv.org/pdf/2606.11087.pdf">
+<meta name="citation_public_url" content="https://arxiv.org/abs/2606.11087">
+<meta name="citation_abstract" content="Expressive continuous control policies, such as diffusion and flow models, form the backbone of recent advances in scaling imitation learning for simulated and real robot control. While they are known to scale stably in the supervised imitation learning setting, incorporating them into reinforcement learning (RL) pipelines for policy improvement has proven more difficult. It often requires specialized training objectives or backpropagating through denoising processes, which cause well-known issues with stability and affect scalability. In this paper we study the question of whether simple policy improvement schemes at test time alone, leaving stable supervised policy training intact, can be a competitive alternative which sidesteps these issues. To this end, we propose QGF (Q-Guided Flow), an RL algorithm that performs policy optimization entirely at test time. QGF works by pre-training both a reference flow policy (via a standard behavioral cloning objective) and a value function critic and, at test time, using the value gradient to guide the reference policy to generate higher-value actions without any additional policy learning. Empirically, QGF outperforms prior test-time RL methods on single-task and goal-conditioned offline RL benchmarks with high-dimensional action spaces, and is competitive with state-of-the-art training-time algorithms while being much cheaper to run. Moreover, it exhibits favorable scaling with model size by avoiding the instability of actor-critic training, offering a practical and effective alternative RL algorithm with expressive policies.">
+<meta name="citation_doi" content="10.48550/arXiv.2606.11087">
+<style>
+  body { font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+         margin: 0 auto; max-width: 760px; padding: 1.5rem; line-height: 1.5; }
+  a { color: #2563eb; }
+  h1 { font-size: 1.35rem; margin: .3rem 0; }
+  h2 { font-size: 1rem; color: #777; margin: 1.5rem 0 .4rem; }
+  .authors { color: #444; }
+  .venue { color: #777; margin: .2rem 0 1rem; }
+  .save { background: #cc29361a; border: 1px solid #cc293655; border-radius: 8px;
+           padding: .6rem .8rem; }
+  .save b { color: #cc2936; }
+  .links a { margin-right: .8rem; }
+  .back { color: #777; font-size: .9rem; }
+</style>
+</head>
+<body>
+  <p><a class="back" href="../index.html">← All papers</a></p>
+  <h1>Test-Time Gradient Guidance of Flow Policies in Reinforcement Learning</h1>
+  <p class="authors">Zhiyuan Zhou, Andy Peng, Charles Xu, Qiyang Li, Tobias Springenberg, Kevin Frans, Sergey Levine</p>
+  <p class="venue">arXiv · 2026</p>
+  <p class="save">📚 Click your <b>Zotero Connector</b> toolbar button now to save this paper
+     <b>with its PDF</b> attached.</p>
+  <p class="links"><a href="https://arxiv.org/abs/2606.11087" target="_blank" rel="noopener">Paper</a> · <a href="https://github.com/zhouzypaul/qgf" target="_blank" rel="noopener">Code</a> · <a href="https://arxiv.org/pdf/2606.11087.pdf" target="_blank" rel="noopener">PDF</a></p>
+  <h2>Abstract</h2>
+  <p>Expressive continuous control policies, such as diffusion and flow models, form the backbone of recent advances in scaling imitation learning for simulated and real robot control. While they are known to scale stably in the supervised imitation learning setting, incorporating them into reinforcement learning (RL) pipelines for policy improvement has proven more difficult. It often requires specialized training objectives or backpropagating through denoising processes, which cause well-known issues with stability and affect scalability. In this paper we study the question of whether simple policy improvement schemes at test time alone, leaving stable supervised policy training intact, can be a competitive alternative which sidesteps these issues. To this end, we propose QGF (Q-Guided Flow), an RL algorithm that performs policy optimization entirely at test time. QGF works by pre-training both a reference flow policy (via a standard behavioral cloning objective) and a value function critic and, at test time, using the value gradient to guide the reference policy to generate higher-value actions without any additional policy learning. Empirically, QGF outperforms prior test-time RL methods on single-task and goal-conditioned offline RL benchmarks with high-dimensional action spaces, and is competitive with state-of-the-art training-time algorithms while being much cheaper to run. Moreover, it exhibits favorable scaling with model size by avoiding the instability of actor-critic training, offering a practical and effective alternative RL algorithm with expressive policies.</p>
+</body>
+</html>
