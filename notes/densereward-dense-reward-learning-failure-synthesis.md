@@ -4,8 +4,7 @@
 
 ## My take
 
-_Your opinion here — strengths, weaknesses, relevance to your work, ideas to borrow._
-
 ## Notes
+
 
 -

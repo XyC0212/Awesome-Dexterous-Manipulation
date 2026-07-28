@@ -4,7 +4,11 @@
 
 ## My take
 
-_Your opinion here — strengths, weaknesses, relevance to your work, ideas to borrow._
+The TeleDexter is one hand-object co-tracking for human-level dexterous teleoperation. 
+
+One weakness is the requirement of the Motion Capturing System.
+
+This paper seems to be one upgrade of simtoolreal. Use the human hand pose from glove and the object pose as the input.
 
 ## Notes
 
