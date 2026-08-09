@@ -39,7 +39,8 @@ Each paper is tagged across the following themes:
 | 15 | EgoEngine: From Egocentric Human Videos to High-Fidelity Dexterous Robot Demonstrations | arXiv | 2026 | Georgia Tech | | ✅ | | ✅ | | | | [Paper](https://arxiv.org/abs/2606.12604) · [Project](https://egoengine.github.io/) |
 | 16 | Video2Sim2Real: Full-Stack Autonomous Dexterous Skill Acquisition from a Single Human Video | arXiv | 2026 | Georgia Tech | ✅ | ✅ | | ✅ | | ✅ | | [Paper](https://arxiv.org/abs/2606.08828) · [Project](https://video2sim2real.github.io/) |
 | 17 | SimToolReal: An Object-Centric Policy for Zero-Shot Dexterous Tool Manipulation | arXiv | 2026 | Cornell University | ✅ | | | ✅ | | ✅ | | [Paper](https://arxiv.org/abs/2602.16863) · [Project](https://simtoolreal.github.io/) |
-| 18 | ManipTrans: Efficient Dexterous Bimanual Manipulation Transfer via Residual Learning | CVPR | 2025 | BIGAI | ✅ | ✅ | | | | | | [Paper](https://arxiv.org/abs/2503.21860) · [Project](https://maniptrans.github.io) · [Code](https://github.com/ManipTrans/ManipTrans) |
+| 18 | Dex1B: Learning with 1B Demonstrations for Dexterous Manipulation | RSS | 2025 | UC San Diego | | ✅ | | | | | | [Paper](https://arxiv.org/abs/2506.17198) · [Project](https://jianglongye.com/dex1b) |
+| 19 | ManipTrans: Efficient Dexterous Bimanual Manipulation Transfer via Residual Learning | CVPR | 2025 | BIGAI | ✅ | ✅ | | | | | | [Paper](https://arxiv.org/abs/2503.21860) · [Project](https://maniptrans.github.io) · [Code](https://github.com/ManipTrans/ManipTrans) |
 
 <!-- markdownlint-enable MD060 -->
 
