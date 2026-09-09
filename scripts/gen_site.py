@@ -32,7 +32,7 @@ OUT = ROOT / "docs" / "index.html"
 PAPERS_DIR = ROOT / "docs" / "p"
 CACHE = ROOT / "scripts" / "zotero_cache.json"
 
-TAGS = ["RL", "IL", "WM", "HV", "Tac", "HW", "Tele"]
+TAGS = ["RL", "IL", "WM", "HV", "Tac", "HW", "Tele", "Fnd"]
 LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
 ARXIV_RE = re.compile(r"arxiv\.org/(?:abs|pdf|html)/(\d{4}\.\d{4,5})", re.I)
 
@@ -50,11 +50,11 @@ def parse_readme():
         if not re.match(r"^\|\s*\d+\s*\|", line):
             continue
         cells = [c.strip() for c in line.strip().strip("|").split("|")]
-        # cells: #, Title, Venue, Year, Affiliation, RL, IL, WM, HV, Tac, HW, Tele, Links
-        if len(cells) < 13:
+        # cells: #, Title, Venue, Year, Affiliation, RL, IL, WM, HV, Tac, HW, Tele, Fnd, Links
+        if len(cells) < 14:
             continue
         num, title, venue, year, affiliation = cells[0], cells[1], cells[2], cells[3], cells[4]
-        tag_cells = cells[5:12]
+        tag_cells = cells[5:13]
         tags = [TAGS[i] for i, c in enumerate(tag_cells) if "✅" in c]
         papers.append({
             "n": int(num),
@@ -63,7 +63,7 @@ def parse_readme():
             "year": year,
             "affiliation": affiliation,
             "tags": tags,
-            "links": parse_links(cells[12]),
+            "links": parse_links(cells[13]),
         })
     return papers
 
