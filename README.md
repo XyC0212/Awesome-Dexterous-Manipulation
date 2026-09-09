@@ -43,6 +43,7 @@ Each paper is tagged across the following themes:
 | 18 | Dex1B: Learning with 1B Demonstrations for Dexterous Manipulation | RSS | 2025 | UC San Diego | | ✅ | | | | | | | [Paper](https://arxiv.org/abs/2506.17198) · [Project](https://jianglongye.com/dex1b) |
 | 19 | ManipTrans: Efficient Dexterous Bimanual Manipulation Transfer via Residual Learning | CVPR | 2025 | BIGAI | ✅ | ✅ | | | | | | | [Paper](https://arxiv.org/abs/2503.21860) · [Project](https://maniptrans.github.io) · [Code](https://github.com/ManipTrans/ManipTrans) |
 | 20 | AnyTeleop: A General Vision-Based Dexterous Robot Arm-Hand Teleoperation System | RSS | 2023 | UC San Diego | | ✅ | | | | | ✅ | ✅ | [Paper](https://arxiv.org/abs/2307.04577) · [Project](https://yzqin.github.io/anyteleop/) · [Code](https://github.com/dexsuite/dex-retargeting) |
+| 21 | TACTO: A Fast, Flexible, and Open-source Simulator for High-Resolution Vision-based Tactile Sensors | RA-L | 2022 | Massachusetts Institute of Technology | | | | | ✅ | | | ✅ | [Paper](https://arxiv.org/abs/2012.08456) · [Code](https://github.com/facebookresearch/tacto) |
 
 <!-- markdownlint-enable MD060 -->
 

@@ -372,5 +372,17 @@
     "abstract": "Vision-based teleoperation offers the possibility to endow robots with human-level intelligence to physically interact with the environment, while only requiring low-cost camera sensors. However, current vision-based teleoperation systems are designed and engineered towards a particular robot model and deploy environment, which scales poorly as the pool of the robot models expands and the variety of the operating environment increases. In this paper, we propose AnyTeleop, a unified and general teleoperation system to support multiple different arms, hands, realities, and camera configurations within a single system. Although being designed to provide great flexibility to the choice of simulators and real hardware, our system can still achieve great performance. For real-world experiments, AnyTeleop can outperform a previous system that was designed for a specific robot hardware with a higher success rate, using the same robot. For teleoperation in simulation, AnyTeleop leads to better imitation learning performance, compared with a previous system that is particularly designed for that simulator. Project page: https://yzqin.github.io/anyteleop/.",
     "year": "2023",
     "doi": ""
+  },
+  "2012.08456": {
+    "title": "TACTO: A Fast, Flexible, and Open-source Simulator for High-Resolution Vision-based Tactile Sensors",
+    "authors": [
+      "Shaoxiong Wang",
+      "Mike Lambeta",
+      "Po-Wei Chou",
+      "Roberto Calandra"
+    ],
+    "abstract": "Simulators perform an important role in prototyping, debugging, and benchmarking new advances in robotics and learning for control. Although many physics engines exist, some aspects of the real world are harder than others to simulate. One of the aspects that have so far eluded accurate simulation is touch sensing. To address this gap, we present TACTO - a fast, flexible, and open-source simulator for vision-based tactile sensors. This simulator allows to render realistic high-resolution touch readings at hundreds of frames per second, and can be easily configured to simulate different vision-based tactile sensors, including DIGIT and OmniTact. In this paper, we detail the principles that drove the implementation of TACTO and how they are reflected in its architecture. We demonstrate TACTO on a perceptual task, by learning to predict grasp stability using touch from 1 million grasps, and on a marble manipulation control task. Moreover, we provide a proof-of-concept that TACTO can be successfully used for Sim2Real applications. We believe that TACTO is a step towards the widespread adoption of touch sensing in robotic applications, and to enable machine learning practitioners interested in multi-modal learning and control. TACTO is open-source at https://github.com/facebookresearch/tacto.",
+    "year": "2020",
+    "doi": "10.1109/LRA.2022.3146945"
   }
 }
