@@ -191,6 +191,27 @@ def find_existing(zot, arxiv_id, title, pushed):
     return None
 
 
+def attach_pdf(zot, parent_key, pdf, attempts=3):
+    """Attach `pdf` to item `parent_key`, retrying on failure. Returns True on success.
+
+    A timed-out upload usually still lands the bytes in Zotero storage, so a retry
+    short-circuits on the API's "file already exists" path (pyzotero reports that
+    as `unchanged`, not `failure`). Attempts that fail leave no orphan child item.
+    """
+    for i in range(attempts):
+        try:
+            att = zot.attachment_simple([str(pdf)], parent_key)
+        except Exception as e:
+            print(f"      PDF upload attempt {i + 1}/{attempts} raised {type(e).__name__}: {e}",
+                  file=sys.stderr)
+            continue
+        if not att.get("failure"):
+            return True
+        print(f"      PDF upload attempt {i + 1}/{attempts} failed: {att['failure']}",
+              file=sys.stderr)
+    return False
+
+
 def push(arxiv_ids, dry_run=False):
     """Add each arXiv id to Zotero with its PDF. Returns a list of result dicts:
     {id, ok, title, msg, skipped?}. Never raises per-item; raises ConfigError
@@ -206,7 +227,10 @@ def push(arxiv_ids, dry_run=False):
             from pyzotero import zotero
         except ImportError:
             raise ConfigError("pyzotero is not installed. Run:  pip install pyzotero")
-        zot = zotero.Zotero(cfg["library_id"], cfg["library_type"], cfg["api_key"])
+        # pyzotero defaults to a 120 s upload timeout, which a large (10 MB+)
+        # arXiv PDF can blow through on a slow uplink.
+        zot = zotero.Zotero(cfg["library_id"], cfg["library_type"], cfg["api_key"],
+                            upload_timeout=600)
 
     col_name = cfg["collection"] if not dry_run else None
     col_key = get_collection_key(zot, col_name) if col_name else None
@@ -242,11 +266,10 @@ def push(arxiv_ids, dry_run=False):
             pushed[aid] = key
             changed = True
             pdf = download_pdf(aid)
-            att = zot.attachment_simple([pdf], key)
-            if att.get("failure"):
-                r.update(ok=True, msg=f"item added ({key}) but PDF upload failed: {att['failure']}")
-            else:
+            if attach_pdf(zot, key, pdf):
                 r.update(ok=True, msg=f"added + PDF attached ({key}){where}")
+            else:
+                r.update(ok=True, msg=f"item added ({key}) but PDF upload failed{where}")
             results.append(r)
         except Exception as e:  # keep going for the rest
             r["msg"] = f"{type(e).__name__}: {e}"
