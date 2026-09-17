@@ -1,8 +1,10 @@
 # Paper Summaries
 
-One-sentence summaries used for retrieval, newest first. Full metadata — labels, venue,
-year, affiliation, and links — lives in the [README table](README.md); your own opinions
-and longer notes live one-file-per-paper in [notes/](notes/).
+One- or two-sentence plain-language summaries used for retrieval, newest first. Each is
+written for a researcher who knows robot learning but has only a little
+dexterous-manipulation background. Full metadata — labels, venue, year, affiliation, and
+links — lives in the [README table](README.md); your own opinions and longer notes live
+one-file-per-paper in [notes/](notes/).
 
 - **Dex-X: Learning Visual-Tactile Dexterous Manipulation From Human Videos with Simulated Interaction** ([paper](https://arxiv.org/abs/2609.07747)) — Uses simulation as a tactile completion engine, reconstructing monocular human hand-object demonstrations in sim so contact dynamics supply the missing tactile supervision, then trains a privileged state-based PPO expert and distills it into a point-cloud + tactile student that transfers zero-shot, hitting 65.9% average success over six simulated task categories, 93% on real cube picking and 53% on table cleaning.
 - **DeCAL: Towards Physically-Grounded Dexterous Vision-Language-Action Models via Contact-Aware Latent Co-Imagination** ([paper](https://arxiv.org/abs/2609.09119)) — A Mixture-of-Transformers VLA that gates tactile input by a contact-aware adaptive visuo-tactile fusion module and jointly imagines future visual and tactile latents as an implicit dynamics model, reaching 71% average success and 83.4% progress success across contact-rich dexterous tasks.

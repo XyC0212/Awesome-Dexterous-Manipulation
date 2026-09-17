@@ -1,6 +1,6 @@
 ---
 name: add-paper
-description: Catalogue a dexterous-manipulation paper into this repo. Use this WHENEVER the user provides a paper to add — an arXiv link, any URL, a title, or a PDF/file. It reads the paper, assigns theme labels (RL/IL/WM/Tac/HW/Tele), appends a row to the README table, writes a one-sentence summary to summaries/ for later retrieval, regenerates the GitHub Pages site, and commits.
+description: Catalogue a dexterous-manipulation paper into this repo. Use this WHENEVER the user provides a paper to add — an arXiv link, any URL, a title, or a PDF/file. It reads the paper, assigns theme labels (RL/IL/WM/Tac/HW/Tele), appends a row to the README table, writes a short plain-language summary to SUMMARIES.md for later retrieval, regenerates the GitHub Pages site, and commits.
 ---
 
 # Add a paper to Awesome-Dexterous-Manipulation
@@ -51,11 +51,46 @@ label that doesn't truly apply.
    [SUMMARIES.md](../../../SUMMARIES.md) (newest first, matching the table). Format:
 
    ```text
-   - **<Title>** ([paper](<url>)) — <one specific sentence: method + key result>.
+   - **<Title>** ([paper](<url>)) — <what the method does, then the key result>.
    ```
 
-   Keep it to a single sentence. This file is the retrieval index; do not duplicate
-   labels/venue/year/affiliation here — those live in the README table.
+   **One or two sentences, never more.** Write for a researcher who knows robot learning
+   but has only a little dexterous-manipulation background: the first sentence says what
+   the paper does and how, in plain language; the second (optional) gives the headline
+   result or the one thing that makes the paper notable. Clarity beats completeness — a
+   reader skimming this file should grasp the idea without opening the paper.
+
+   - Prefer plain wording over the paper's branded names. If a coined term is worth
+     keeping, say what it does in a few words rather than dropping it in bare.
+   - Expand an acronym on first use unless it is already in the Categories list above
+     (RL, IL, VLA, MoT, sim-to-real are fine as-is).
+   - Keep a number only when it carries the claim (a headline success rate, a dataset
+     size). Drop per-task breakdowns and ablation detail.
+   - No stacked clauses. If a sentence needs a second "and ... while ...", split it or
+     cut it.
+
+   Good:
+
+   ```text
+   - **Dex-X: ...** ([paper](...)) — Replays monocular human hand-object videos in a
+     physics simulator so that simulated contact supplies the tactile signal the video
+     never recorded, then trains a policy on that visual-tactile data. It transfers to a
+     real hand-arm robot with no robot-collected demonstrations, picking cubes at 93%.
+   ```
+
+   Too dense (one 60-word run-on, branded terms unexplained — avoid this):
+
+   ```text
+   - **Dex-X: ...** ([paper](...)) — Uses simulation as a tactile completion engine,
+     reconstructing monocular human hand-object demonstrations in sim so contact dynamics
+     supply the missing tactile supervision, then trains a privileged state-based PPO
+     expert and distills it into a point-cloud + tactile student that transfers zero-shot,
+     hitting 65.9% average success over six simulated task categories, 93% on real cube
+     picking and 53% on table cleaning.
+   ```
+
+   This file is the retrieval index; do not duplicate labels/venue/year/affiliation here —
+   those live in the README table.
 
    Then create an empty **notes stub** at `notes/<slug>.md` for the user to fill in their
    own opinion, following the template of the existing files in
